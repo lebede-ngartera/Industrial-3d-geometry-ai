@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Normal vs anomalous geometry comparison</title>
+  <desc id="desc">Representative public figure contrasting normal and anomalous geometry with calibrated threshold labels.</desc>
+  <rect width="1280" height="720" fill="#f6f3ec"/>
+  <rect x="40" y="40" width="1200" height="640" rx="28" fill="#ffffff" stroke="#d8d2c7"/>
+  <text x="80" y="100" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Anomaly Scoring Example</text>
+  <text x="80" y="136" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Representative public comparison using warning and critical thresholds</text>
+
+  <g transform="translate(100 190)">
+    <rect width="460" height="400" rx="24" fill="#f7f4ee" stroke="#d8d2c7"/>
+    <text x="30" y="44" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Normal</text>
+    <rect x="324" y="18" width="106" height="38" rx="19" fill="#4e7a63"/>
+    <text x="346" y="43" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">score 0.08</text>
+    <circle cx="230" cy="206" r="118" fill="#4e7a63" opacity="0.12"/>
+    <circle cx="230" cy="206" r="86" fill="none" stroke="#4e7a63" stroke-width="3"/>
+    <circle cx="230" cy="206" r="52" fill="none" stroke="#3d6287" stroke-width="2" opacity="0.7"/>
+    <text x="54" y="344" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Below warning threshold</text>
+    <text x="54" y="376" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Expected geometry pattern</text>
+  </g>
+
+  <g transform="translate(720 190)">
+    <rect width="460" height="400" rx="24" fill="#f7f4ee" stroke="#d8d2c7"/>
+    <text x="30" y="44" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Anomalous</text>
+    <rect x="308" y="18" width="122" height="38" rx="19" fill="#c77454"/>
+    <text x="330" y="43" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">score 0.31</text>
+    <circle cx="230" cy="206" r="118" fill="#3d6287" opacity="0.12"/>
+    <path d="M160 164 L300 164 L270 304 L140 264 Z" fill="none" stroke="#c77454" stroke-width="10" stroke-linejoin="round"/>
+    <circle cx="300" cy="164" r="24" fill="#c77454" opacity="0.84"/>
+    <circle cx="144" cy="264" r="20" fill="#c77454" opacity="0.64"/>
+    <text x="54" y="344" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Exceeds warning threshold</text>
+    <text x="54" y="376" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Requires engineering review</text>
+  </g>
+
+  <rect x="80" y="620" width="1120" height="28" rx="14" fill="#e7e1d6"/>
+  <rect x="80" y="620" width="480" height="28" rx="14" fill="#4e7a63" opacity="0.55"/>
+  <rect x="560" y="620" width="220" height="28" rx="14" fill="#c77454" opacity="0.7"/>
+  <text x="86" y="614" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="16">normal range</text>
+  <text x="558" y="614" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="16">warning</text>
+  <text x="784" y="614" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="16">critical</text>
+</svg>

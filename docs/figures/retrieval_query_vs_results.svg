@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Shape similarity search output</title>
+  <desc id="desc">Representative public figure showing one query geometry and top retrieved shapes with similarity scores.</desc>
+  <rect width="1280" height="720" fill="#f6f3ec"/>
+  <rect x="40" y="40" width="1200" height="640" rx="28" fill="#ffffff" stroke="#d8d2c7"/>
+  <text x="80" y="100" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Shape Similarity Search</text>
+  <text x="80" y="136" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">Representative public output from the retrieval workflow</text>
+
+  <rect x="80" y="180" width="260" height="420" rx="24" fill="#17212b"/>
+  <text x="110" y="225" fill="#f4efe7" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Query</text>
+  <circle cx="210" cy="390" r="110" fill="#4e7a63" opacity="0.2"/>
+  <circle cx="210" cy="390" r="82" fill="none" stroke="#b8d3c1" stroke-width="2"/>
+  <circle cx="210" cy="390" r="50" fill="none" stroke="#ffffff" stroke-opacity="0.7"/>
+  <text x="130" y="565" fill="#d8ddd8" font-family="Segoe UI, Arial, sans-serif" font-size="20">spherical housing</text>
+
+  <g transform="translate(390 180)">
+    <rect width="250" height="190" rx="22" fill="#f7f4ee" stroke="#d8d2c7"/>
+    <text x="24" y="36" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Top 1</text>
+    <text x="178" y="36" fill="#4e7a63" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">0.94</text>
+    <circle cx="125" cy="102" r="56" fill="#4e7a63" opacity="0.18"/>
+    <circle cx="125" cy="102" r="42" fill="none" stroke="#4e7a63" stroke-width="2"/>
+    <text x="62" y="164" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="18">rounded valve cap</text>
+  </g>
+  <g transform="translate(670 180)">
+    <rect width="250" height="190" rx="22" fill="#f7f4ee" stroke="#d8d2c7"/>
+    <text x="24" y="36" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Top 2</text>
+    <text x="178" y="36" fill="#4e7a63" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">0.90</text>
+    <circle cx="125" cy="102" r="56" fill="#3d6287" opacity="0.18"/>
+    <circle cx="125" cy="102" r="42" fill="none" stroke="#3d6287" stroke-width="2"/>
+    <text x="58" y="164" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="18">curved end fitting</text>
+  </g>
+  <g transform="translate(950 180)">
+    <rect width="250" height="190" rx="22" fill="#f7f4ee" stroke="#d8d2c7"/>
+    <text x="24" y="36" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Top 3</text>
+    <text x="178" y="36" fill="#4e7a63" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">0.87</text>
+    <circle cx="125" cy="102" r="56" fill="#c77454" opacity="0.18"/>
+    <circle cx="125" cy="102" r="42" fill="none" stroke="#c77454" stroke-width="2"/>
+    <text x="55" y="164" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="18">compact pressure dome</text>
+  </g>
+
+  <rect x="390" y="420" width="810" height="180" rx="22" fill="#fbfaf7" stroke="#d8d2c7"/>
+  <text x="420" y="466" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">What this figure proves</text>
+  <text x="420" y="510" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">A query geometry can be embedded and matched against a searchable gallery.</text>
+  <text x="420" y="544" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="20">The public repository supports ranked results with similarity scores and metadata.</text>
+</svg>

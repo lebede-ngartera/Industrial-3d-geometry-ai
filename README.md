@@ -133,7 +133,130 @@ This repository makes only claims that are directly supported by the current cod
 
 Additional validation notes are recorded in [results/README.md](results/README.md).
 
+Public evaluation artifacts for the reproducible synthetic subset are recorded in [results/public_metrics.md](results/public_metrics.md).
+
 ![Validation summary](docs/figures/validation_summary.svg)
+
+---
+
+## Quickstart (1 minute)
+
+Run the public demo locally with a curated synthetic/public-safe subset and lightweight artifacts.
+
+```bash
+git clone https://github.com/lebede-ngartera/Industrial-3d-geometry-ai.git
+cd Industrial-3d-geometry-ai
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Open `http://localhost:8501`
+
+What this runs:
+
+- local Streamlit demo
+- synthetic shape workflows with no dataset download required
+- interactive modules for transforms, classification, similarity search, anomaly scoring, and generation
+
+Notes:
+
+- The public demo is designed for fast local exploration, not full production-scale evaluation.
+- The public version is intentionally lightweight so it stays reproducible without exposing private case-study assets.
+
+---
+
+## Visual Outputs
+
+### Shape similarity search
+
+![Shape similarity search output](docs/figures/retrieval_query_vs_results.svg)
+
+### Text-to-geometry retrieval
+
+![Text-to-geometry retrieval output](docs/figures/text_to_shape_results.svg)
+
+### Normal vs anomalous geometry
+
+![Normal vs anomalous geometry comparison](docs/figures/anomaly_normal_vs_anomalous.svg)
+
+### Public demo interface
+
+![GeoFusion AI demo interface](docs/figures/demo_interface_snapshot.svg)
+
+---
+
+## Results (Public Subset)
+
+The metrics below come from `scripts/public_eval.py`, which evaluates a reproducible synthetic public subset of 40 training samples and 10 test samples across 5 geometry classes using 512-point clouds.
+
+They are intended to demonstrate functional system behavior in the public release.
+They are not presented as proprietary or production-scale industrial benchmarks.
+Cross-modal rows use a simple linear text-projection baseline fitted on the public synthetic text templates.
+
+| Area | Metric | Value | Notes |
+| ---- | ------ | ----- | ----- |
+| Classification | Top-1 accuracy | 0.9000 | Synthetic public subset |
+| Classification | Top-5 accuracy | 1.0000 | Synthetic public subset |
+| Retrieval | Recall@1 | 1.0000 | Test queries vs train gallery |
+| Retrieval | Recall@5 | 1.0000 | Test queries vs train gallery |
+| Retrieval | Recall@10 | 1.0000 | Test queries vs train gallery |
+| Retrieval | Precision@5 | 1.0000 | Test queries vs train gallery |
+| Retrieval | mAP | 1.0000 | Test queries vs train gallery |
+| Cross-modal | G2T Recall@5 | 1.0000 | Geometry vs projected text |
+| Cross-modal | T2G Recall@5 | 1.0000 | Projected text vs geometry |
+| Anomaly workflow | Warning threshold | 1.709853 | Calibrated on normal subset |
+| Anomaly workflow | Critical threshold | 1.710062 | Calibrated on normal subset |
+
+Interpretation:
+
+- Classification metrics describe the lightweight public baseline on synthetic shape classes.
+- Retrieval metrics describe whether semantically related geometry is recoverable in the shared embedding space.
+- Cross-modal metrics describe whether geometry and synthetic public text templates align under the lightweight public baseline.
+- Anomaly thresholds describe the calibrated warning and critical boundaries used by the public workflow.
+- Larger-scale industrial evaluation exists outside the public repository and is intentionally not published here.
+
+---
+
+## Dataset (Public Subset)
+
+The public repository is evaluated on a curated public-safe subset designed to demonstrate reproducible system behavior.
+
+Dataset characteristics:
+
+- Source type: synthetic geometry-like samples
+- Representation: 512-point point clouds and derived embeddings
+- Geometry classes: sphere, cube, cylinder, cone, and torus
+- Public evaluation size: 40 training samples and 10 test samples
+- Intended use: demo workflows, public metrics, retrieval experiments, and anomaly-threshold calibration
+
+This public subset is intentionally limited. It supports reproducibility and technical inspection without disclosing private CAD assets or internal benchmark collections.
+
+---
+
+## What Is Implemented vs Prototype vs Roadmap
+
+Implemented:
+
+- point-cloud geometry encoding
+- classification metrics and training workflows
+- FAISS-based similarity search
+- anomaly scoring with calibrated warning and critical thresholds
+- interactive local demo with multiple workflow pages
+
+Prototype / partially implemented:
+
+- property prediction with uncertainty-aware outputs
+- diffusion-based generation workflows
+- broader multimodal engineering task extensions
+
+Roadmap / intentionally not public:
+
+- full production CAD pipeline integration
+- private industrial-scale evaluation datasets
+- enterprise deployment integrations
+- deeper case-study-specific validation assets
+
+This separation is intentional. The public repository is designed to be credible and inspectable without exposing the full private project layer.
 
 ---
 

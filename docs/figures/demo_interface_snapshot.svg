@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Public demo interface snapshot</title>
+  <desc id="desc">Representative public figure showing the Streamlit demo layout for GeoFusion AI.</desc>
+  <rect width="1280" height="720" fill="#f6f3ec"/>
+  <rect x="24" y="24" width="1232" height="672" rx="26" fill="#ffffff" stroke="#d8d2c7"/>
+  <rect x="24" y="24" width="270" height="672" rx="26" fill="#17212b"/>
+  <text x="58" y="84" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">GeoFusion AI</text>
+  <text x="58" y="116" fill="#b8d3c1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Industrial 3D Part Intelligence</text>
+
+  <g fill="#f4efe7" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    <rect x="46" y="154" width="226" height="42" rx="18" fill="#4e7a63"/>
+    <text x="68" y="181">Overview</text>
+    <text x="58" y="236">Data Transforms</text>
+    <text x="58" y="278">PointNet++ Classification</text>
+    <text x="58" y="320">DGCNN Encoder</text>
+    <text x="58" y="362">Similarity Search</text>
+    <text x="58" y="404">Anomaly Detection</text>
+    <text x="58" y="446">Shape Generation</text>
+  </g>
+
+  <text x="334" y="84" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">GeoFusion AI — Interactive Dashboard</text>
+  <text x="334" y="118" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="18">Representative public snapshot of the local demo experience</text>
+
+  <rect x="334" y="154" width="430" height="230" rx="24" fill="#f7f4ee" stroke="#d8d2c7"/>
+  <text x="362" y="192" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Similarity Search</text>
+  <circle cx="474" cy="280" r="62" fill="#4e7a63" opacity="0.16"/>
+  <circle cx="474" cy="280" r="42" fill="none" stroke="#4e7a63" stroke-width="3"/>
+  <rect x="560" y="222" width="166" height="34" rx="17" fill="#17212b"/>
+  <text x="582" y="244" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Top result 0.91</text>
+  <rect x="560" y="274" width="166" height="34" rx="17" fill="#3d6287"/>
+  <text x="582" y="296" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Top result 0.87</text>
+  <rect x="560" y="326" width="166" height="34" rx="17" fill="#c77454"/>
+  <text x="582" y="348" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Top result 0.83</text>
+
+  <rect x="790" y="154" width="430" height="230" rx="24" fill="#f7f4ee" stroke="#d8d2c7"/>
+  <text x="818" y="192" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Anomaly Detection</text>
+  <rect x="832" y="228" width="148" height="148" rx="20" fill="#ffffff" stroke="#d8d2c7"/>
+  <circle cx="906" cy="302" r="44" fill="#4e7a63" opacity="0.16"/>
+  <circle cx="906" cy="302" r="32" fill="none" stroke="#4e7a63" stroke-width="3"/>
+  <rect x="1008" y="248" width="174" height="38" rx="19" fill="#4e7a63"/>
+  <text x="1036" y="272" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">normal</text>
+  <rect x="1008" y="300" width="174" height="38" rx="19" fill="#c77454"/>
+  <text x="1036" y="324" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">warning threshold</text>
+
+  <rect x="334" y="414" width="886" height="232" rx="24" fill="#fbfaf7" stroke="#d8d2c7"/>
+  <text x="362" y="454" fill="#17212b" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Public Demo Modules</text>
+  <text x="362" y="494" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="19">Transforms, classification, retrieval, anomaly scoring, and generation are exposed in one lightweight local interface.</text>
+  <text x="362" y="530" fill="#5d6875" font-family="Segoe UI, Arial, sans-serif" font-size="19">The public version is intentionally optimized for clarity, reproducibility, and technical inspection.</text>
+</svg>

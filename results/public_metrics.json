@@ -1,0 +1,40 @@
+{
+  "dataset": {
+    "name": "public_subset",
+    "source_type": "synthetic_public_safe",
+    "num_train_samples": 40,
+    "num_test_samples": 10,
+    "num_classes": 5,
+    "num_points": 512
+  },
+  "classification": {
+    "top1": 1.0,
+    "top5": 1.0
+  },
+  "retrieval": {
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 1.0,
+    "mAP": 1.0
+  },
+  "cross_modal": {
+    "g2t_recall@1": 1.0,
+    "g2t_recall@5": 1.0,
+    "g2t_recall@10": 1.0,
+    "g2t_mAP": 1.0,
+    "t2g_recall@1": 1.0,
+    "t2g_recall@5": 1.0,
+    "t2g_recall@10": 1.0,
+    "t2g_mAP": 1.0,
+    "text_embedding_note": "Linear text-projection baseline fitted on synthetic paired text templates"
+  },
+  "anomaly": {
+    "warning_threshold": 1.709852695465088,
+    "critical_threshold": 1.71006178855896,
+    "mean_normal_score": 1.708923101425171,
+    "std_normal_score": 0.0011618733406066895,
+    "num_flagged_warning_or_higher": 3,
+    "num_flagged_critical": 3
+  }
+}
