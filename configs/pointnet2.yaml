@@ -1,0 +1,29 @@
+# PointNet++ Configuration
+# ========================
+
+defaults:
+  - default
+
+geometry_encoder:
+  backbone: "pointnet2"
+  embed_dim: 256
+  dropout: 0.3
+  # PointNet++ specific
+  sa1_npoint: 512
+  sa1_radius: 0.2
+  sa1_nsample: 32
+  sa1_mlp: [64, 64, 128]
+  sa2_npoint: 128
+  sa2_radius: 0.4
+  sa2_nsample: 64
+  sa2_mlp: [128, 128, 256]
+  sa3_mlp: [256, 512, 1024]
+  use_xyz: true
+  use_normals: true
+
+training:
+  epochs: 250
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  warmup_epochs: 10

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFusion AI | Collaboration Landing Page</title>
+  <meta name="description" content="GeoFusion AI is a public showcase for industrial 3D geometry intelligence, multimodal retrieval, anomaly analysis, and collaboration opportunities.">
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5d6875;
+      --paper: #f6f3ec;
+      --card: rgba(255, 255, 255, 0.8);
+      --line: rgba(23, 33, 43, 0.12);
+      --sage: #4e7a63;
+      --clay: #c77454;
+      --steel: #3d6287;
+      --plum: #6b5170;
+      --shadow: 0 18px 50px rgba(23, 33, 43, 0.12);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(78, 122, 99, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(199, 116, 84, 0.12), transparent 26%),
+        linear-gradient(180deg, #fbfaf7 0%, #f1ece2 100%);
+    }
+
+    .page-shell {
+      width: min(1200px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 26px 0 10px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--sage), var(--steel));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .brand-mark::before {
+      inset: 9px;
+    }
+
+    .brand-mark::after {
+      inset: 16px;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 17px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .nav a,
+    .link-button,
+    .button {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(8px);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav a:hover,
+    .link-button:hover,
+    .button:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(23, 33, 43, 0.24);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 34px;
+      align-items: center;
+      padding: 42px 0 54px;
+      min-height: 82vh;
+    }
+
+    .hero-copy {
+      animation: fadeUp 700ms ease both;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(78, 122, 99, 0.12);
+      color: var(--sage);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 6vw, 74px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-lead {
+      max-width: 640px;
+      font-size: 19px;
+      line-height: 1.72;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .hero-emphasis {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 28px 0 24px;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--ink), #2d4255);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .hero-note {
+      max-width: 620px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--clay);
+      background: rgba(255,255,255,0.64);
+      border-radius: 0 18px 18px 0;
+      color: var(--muted);
+      line-height: 1.68;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 900ms ease both;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,33,43,0.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 22px;
+      background: #fff;
+    }
+
+    .floating-stat {
+      position: absolute;
+      right: -12px;
+      bottom: 24px;
+      width: 220px;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(23, 33, 43, 0.92);
+      color: #f4efe7;
+      box-shadow: 0 22px 50px rgba(23, 33, 43, 0.26);
+    }
+
+    .floating-stat strong {
+      display: block;
+      font-size: 36px;
+      margin-bottom: 6px;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .floating-stat span {
+      display: block;
+      color: rgba(244,239,231,0.8);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      max-width: 760px;
+    }
+
+    .section-header h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 3vw, 48px);
+      margin: 0 0 12px;
+      line-height: 1.02;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .trust-grid,
+    .cards,
+    .contact-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .trust-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contact-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: stretch;
+    }
+
+    .stat-card,
+    .info-card,
+    .contact-card,
+    .contact-side {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 40px;
+      font-family: Georgia, "Times New Roman", serif;
+      margin-bottom: 8px;
+    }
+
+    .stat-card span,
+    .info-card p,
+    .contact-card p,
+    .contact-side p,
+    .contact-side li {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .info-card h3,
+    .contact-card h3,
+    .contact-side h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .gallery-frame {
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.8);
+      padding: 16px;
+    }
+
+    .gallery-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+    }
+
+    .contact-card ul {
+      margin: 18px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .contact-side ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    footer {
+      padding: 34px 0 56px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero,
+      .contact-grid,
+      .trust-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .floating-stat {
+        position: static;
+        width: auto;
+        margin-top: 18px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page-shell {
+        width: min(100% - 28px, 1200px);
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero-lead,
+      .section-header p {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-copy">
+          <strong>GeoFusion AI</strong>
+          <span>Industrial geometry intelligence, thoughtfully presented</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="../README.md">Repository</a>
+        <a href="architecture.md">Architecture</a>
+        <a href="technical_report.md">Technical report</a>
+        <a href="#collaboration">Collaboration</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Public collaboration page</span>
+          <h1>Where geometry becomes a conversation.</h1>
+          <p class="hero-lead">
+            GeoFusion AI is a public-facing showcase for <span class="hero-emphasis">3D CAD understanding, multimodal retrieval, anomaly analysis, and engineering AI design</span>. It is built to make serious collaborators feel the depth of the work quickly, while keeping the most valuable private case-study material out of the public release.
+          </p>
+          <div class="cta-row">
+            <a class="button button-primary" href="mailto:ngarteralebede12@gmail.com">Start a collaboration</a>
+            <a class="button" href="../README.md">Read the repository</a>
+            <a class="button" href="architecture.md">See the system design</a>
+          </div>
+          <div class="hero-note">
+            This page is not trying to show everything. It is trying to leave the right impression: technical clarity, careful engineering, and enough originality to make the right person want to reach out.
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card">
+            <img src="figures/shape_gallery.svg" alt="Abstract public geometry gallery for GeoFusion AI">
+          </div>
+          <div class="floating-stat">
+            <strong>37 tests</strong>
+            <span>Validated public repository surface across data, models, retrieval, and diffusion workflows.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Why this project stays with people</h2>
+          <p>
+            The strongest technical portfolios do not only prove competence. They make visitors feel they have found someone who understands the problem deeply, thinks in systems, and knows what to keep private. GeoFusion AI is shaped around that idea.
+          </p>
+        </div>
+        <div class="trust-grid">
+          <div class="stat-card">
+            <strong>3D</strong>
+            <span>Geometry first thinking across point clouds, graph encoders, similarity workflows, and generative prototypes.</span>
+          </div>
+          <div class="stat-card">
+            <strong>256D</strong>
+            <span>A shared multimodal latent space connects geometry, engineering language, and structured context.</span>
+          </div>
+          <div class="stat-card">
+            <strong>7</strong>
+            <span>Interactive demo pages give visitors enough surface area to believe the system is real and coherent.</span>
+          </div>
+          <div class="stat-card">
+            <strong>4</strong>
+            <span>Runnable notebooks support technical exploration without turning the repository into a notebook dump.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>A visual language for trust</h2>
+          <p>
+            These figures translate the technical stack into something easy to scan and easy to remember. They make the repository feel like a designed artifact, not just a folder of code.
+          </p>
+        </div>
+        <div class="gallery-frame">
+          <img src="figures/system_overview.svg" alt="GeoFusion AI system overview">
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="cards">
+          <article class="info-card">
+            <h3>Strong enough to believe</h3>
+            <p>
+              The public repository shows architecture, validation, reproducibility, and working demos. It gives collaborators confidence that the work is serious, structured, and defensible.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Selective enough to protect value</h3>
+            <p>
+              The deeper case studies, private analyses, and higher-value narratives are intentionally held back. The public version opens the door without giving away the whole house.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Human enough to invite contact</h3>
+            <p>
+              The goal is not only to inform. It is to make the right engineer, hiring manager, or research partner feel that a conversation would be worth having.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="collaboration">
+        <div class="section-header">
+          <h2>Built to open the right doors</h2>
+          <p>
+            If you work at the intersection of geometry, manufacturing, simulation, retrieval, or applied AI systems, this repository is a strong entry point for conversation. The public work is broad enough to establish trust and focused enough to suggest where deeper collaboration can go.
+          </p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Good collaboration fits</h3>
+            <ul>
+              <li>Industrial 3D geometry understanding and part retrieval</li>
+              <li>CAD and CAE aware machine learning systems</li>
+              <li>Engineering anomaly detection and quality pipelines</li>
+              <li>Multimodal geometry plus text representation learning</li>
+              <li>AI first infrastructure for technical product development</li>
+            </ul>
+            <div class="contact-links">
+              <a class="link-button button-primary" href="mailto:ngarteralebede12@gmail.com">Email for collaboration</a>
+              <a class="link-button" href="https://linkedin.com/in/lebede-ngartera-82429343">LinkedIn</a>
+              <a class="link-button" href="../README.md">Project README</a>
+            </div>
+          </div>
+          <aside class="contact-side">
+            <h3>Public by design</h3>
+            <p>
+              This landing page is meant to create a positive feeling of seriousness, care, and possibility. It shows enough to be memorable and trustworthy, while leaving the deeper story for direct discussion.
+            </p>
+            <ul>
+              <li>Clear problem framing</li>
+              <li>Strong architecture and workflow signaling</li>
+              <li>Visible validation and reproducibility</li>
+              <li>Private case-study protection</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      GeoFusion AI public collaboration page. Curated for meaningful technical conversations, selective visibility, and long-term professional signal.
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<svg width="1200" height="540" viewBox="0 0 1200 540" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="540" fill="#fbfaf7"/>
+  <text x="600" y="44" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2937">Industrial Workflow Map</text>
+  <text x="600" y="74" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#4b5563">How the repository connects learning components to engineering use cases</text>
+
+  <rect x="50" y="150" width="170" height="84" rx="16" fill="#ddeee3" stroke="#3d7a57" stroke-width="2"/>
+  <text x="135" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#214d37">Data Intake</text>
+  <text x="135" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#214d37">ModelNet40</text>
+  <text x="135" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#214d37">ShapeNet or custom files</text>
+
+  <rect x="270" y="150" width="170" height="84" rx="16" fill="#e8eefb" stroke="#325e9b" stroke-width="2"/>
+  <text x="355" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#23416d">Preprocess</text>
+  <text x="355" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#23416d">Sampling</text>
+  <text x="355" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#23416d">Normalization and augment</text>
+
+  <rect x="490" y="150" width="170" height="84" rx="16" fill="#f6e6cb" stroke="#9a6b1f" stroke-width="2"/>
+  <text x="575" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#6b4b16">Encode</text>
+  <text x="575" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#6b4b16">PointNet++</text>
+  <text x="575" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#6b4b16">DGCNN or text encoder</text>
+
+  <rect x="710" y="150" width="170" height="84" rx="16" fill="#efe3ef" stroke="#7a4a7a" stroke-width="2"/>
+  <text x="795" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#5d335d">Align</text>
+  <text x="795" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#5d335d">Shared embedding space</text>
+  <text x="795" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#5d335d">Contrastive learning</text>
+
+  <rect x="930" y="150" width="220" height="84" rx="16" fill="#eaeaea" stroke="#676767" stroke-width="2"/>
+  <text x="1040" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#343434">Operational Layer</text>
+  <text x="1040" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#343434">Search, QA, analytics</text>
+  <text x="1040" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#343434">and generative exploration</text>
+
+  <rect x="120" y="340" width="220" height="88" rx="18" fill="#ffffff" stroke="#3d7a57" stroke-width="2"/>
+  <text x="230" y="378" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="#214d37">Part Reuse</text>
+  <text x="230" y="402" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#214d37">Similarity search across large</text>
+  <text x="230" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#214d37">engineering shape libraries</text>
+
+  <rect x="380" y="340" width="220" height="88" rx="18" fill="#ffffff" stroke="#325e9b" stroke-width="2"/>
+  <text x="490" y="378" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="#23416d">Engineering Search</text>
+  <text x="490" y="402" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#23416d">Query geometry through text</text>
+  <text x="490" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#23416d">and aligned representations</text>
+
+  <rect x="640" y="340" width="220" height="88" rx="18" fill="#ffffff" stroke="#7a4a7a" stroke-width="2"/>
+  <text x="750" y="378" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="#5d335d">Quality Review</text>
+  <text x="750" y="402" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#5d335d">Anomaly scoring for unusual</text>
+  <text x="750" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#5d335d">or suspicious part geometry</text>
+
+  <rect x="900" y="340" width="220" height="88" rx="18" fill="#ffffff" stroke="#9a6b1f" stroke-width="2"/>
+  <text x="1010" y="378" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="#6b4b16">Design Exploration</text>
+  <text x="1010" y="402" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#6b4b16">Prototype generation and</text>
+  <text x="1010" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#6b4b16">property aware modeling hooks</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <line x1="220" y1="192" x2="270" y2="192" stroke="#666" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="440" y1="192" x2="490" y2="192" stroke="#666" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="660" y1="192" x2="710" y2="192" stroke="#666" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="880" y1="192" x2="930" y2="192" stroke="#666" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <line x1="1040" y1="234" x2="230" y2="340" stroke="#666" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <line x1="1040" y1="234" x2="490" y2="340" stroke="#666" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <line x1="1040" y1="234" x2="750" y2="340" stroke="#666" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <line x1="1040" y1="234" x2="1010" y2="340" stroke="#666" stroke-width="2.2" marker-end="url(#arrow)"/>
+</svg>

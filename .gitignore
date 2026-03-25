@@ -1,0 +1,66 @@
+# Data files (track data/README.md and data/.gitkeep)
+data/*
+!data/README.md
+!data/.gitkeep
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.ply
+*.obj
+*.stl
+
+# Outputs
+outputs/
+checkpoints/
+wandb/
+mlruns/
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Trained models
+*.pt
+*.pth
+*.onnx
+
+# Personal files (not part of the project)
+Cover_Letter_*.md
+Reume_*.md
+BMW_Interview_Prep.html
+Code_Mastery_Lab.html
+_fix_escape.py
+_patch_*.py
+_write_resume.py
+app_avatar.py
+app_edu.py
+app_real_Practice.py
+app_reconstitution_Image.py
+bmw_case_study.py

@@ -1,0 +1,39 @@
+# Multimodal Training Configuration
+# ====================================
+
+defaults:
+  - default
+
+data:
+  dataset: "shapenet"
+  num_points: 2048
+  batch_size: 64
+  include_text: true
+  include_metadata: true
+
+geometry_encoder:
+  backbone: "pointnet2"
+  embed_dim: 256
+  pretrained: null  # path to pretrained geometry encoder
+
+text_encoder:
+  backbone: "sentence-transformers/all-MiniLM-L6-v2"
+  embed_dim: 256
+  freeze_backbone: true
+  projection_dim: 256
+
+multimodal:
+  temperature: 0.07
+  embed_dim: 256
+  use_projection: true
+  projection_hidden: 512
+  loss_type: "ntxent"  # ntxent, clip, triplet
+  hard_negative_mining: true
+
+training:
+  epochs: 100
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  scheduler: "cosine"
+  warmup_epochs: 5
+  gradient_clip: 1.0

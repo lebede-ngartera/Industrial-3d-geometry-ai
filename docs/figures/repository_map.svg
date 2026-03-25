@@ -1,0 +1,41 @@
+<svg width="1200" height="560" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="560" fill="#fbfbf9"/>
+  <text x="600" y="42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2937">Repository Map</text>
+  <text x="600" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#4b5563">How the public repository is organized for credibility, reproducibility, and discussion</text>
+
+  <rect x="60" y="120" width="220" height="110" rx="18" fill="#dcefe3" stroke="#3d7a57" stroke-width="2"/>
+  <text x="170" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#214d37">geofusion</text>
+  <text x="170" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#214d37">Core library code</text>
+  <text x="170" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#214d37">models, data, retrieval, training</text>
+
+  <rect x="340" y="120" width="220" height="110" rx="18" fill="#e8eefb" stroke="#325e9b" stroke-width="2"/>
+  <text x="450" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#23416d">configs and scripts</text>
+  <text x="450" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#23416d">Reproducible runs</text>
+  <text x="450" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#23416d">training, evaluation, indexing</text>
+
+  <rect x="620" y="120" width="220" height="110" rx="18" fill="#f6e6cb" stroke="#9a6b1f" stroke-width="2"/>
+  <text x="730" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#6b4b16">notebooks and app</text>
+  <text x="730" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#6b4b16">Exploration and demos</text>
+  <text x="730" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#6b4b16">interactive showcase surface</text>
+
+  <rect x="900" y="120" width="220" height="110" rx="18" fill="#efe3ef" stroke="#7a4a7a" stroke-width="2"/>
+  <text x="1010" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#5d335d">docs and results</text>
+  <text x="1010" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#5d335d">Architecture, rationale</text>
+  <text x="1010" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#5d335d">public validation only</text>
+
+  <rect x="160" y="330" width="880" height="150" rx="24" fill="#ffffff" stroke="#676767" stroke-width="2.5"/>
+  <text x="600" y="378" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" fill="#343434">Public Repository Intent</text>
+  <text x="600" y="412" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#343434">Show enough technical depth to build trust</text>
+  <text x="600" y="438" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#343434">Keep deeper case studies, custom evaluations, and private narratives outside the public release</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <line x1="170" y1="230" x2="380" y2="330" stroke="#666" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="450" y1="230" x2="520" y2="330" stroke="#666" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="730" y1="230" x2="680" y2="330" stroke="#666" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1010" y1="230" x2="820" y2="330" stroke="#666" stroke-width="2.5" marker-end="url(#arrow)"/>
+</svg>
