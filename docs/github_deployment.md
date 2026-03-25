@@ -20,8 +20,8 @@ Public entry points:
 
 1. `README.md`
 2. `docs/index.html`
-3. `docs/architecture.md`
-4. `docs/technical_report.md`
+3. `docs/architecture.html`
+4. `docs/technical_report.html`
 5. `results/README.md`
 
 Do not add private case studies, internal slide narratives, or collaboration-specific benchmark packs to the public repository unless you explicitly want them public.
@@ -45,13 +45,13 @@ Run through this checklist before the first public push.
 pytest tests/ -v --tb=short
 ```
 
-2. Compile check the Streamlit app:
+1. Compile check the Streamlit app:
 
 ```bash
 python -W error -m py_compile app.py
 ```
 
-3. Optionally check formatting and linting:
+1. Optionally check formatting and linting:
 
 ```bash
 black --check geofusion/ scripts/ tests/
@@ -61,9 +61,10 @@ ruff check geofusion/ scripts/ tests/
 ### Presentation review
 
 1. Open `docs/index.html` in a browser and verify the hero experience.
-2. Open `README.md` and confirm the links render correctly.
-3. Check that the figures in `docs/figures/` load as expected.
-4. Confirm that the repository reads as a curated showcase, not a full dump.
+2. Open `docs/architecture.html` and `docs/technical_report.html` and verify the visual consistency.
+3. Open `README.md` and confirm the links render correctly.
+4. Check that the figures in `docs/figures/` load as expected.
+5. Confirm that the repository reads as a curated showcase, not a full dump.
 
 ## Step 1: Initialize the Public Repository
 

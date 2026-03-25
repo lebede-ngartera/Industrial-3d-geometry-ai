@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GeoFusion AI | Collaboration Landing Page</title>
-  <meta name="description" content="GeoFusion AI is a public showcase for industrial 3D geometry intelligence, multimodal retrieval, anomaly analysis, and collaboration opportunities.">
+  <meta name="description" content="GeoFusion AI is a public showcase for industrial 3D geometry intelligence, multimodal retrieval, anomaly analysis, and serious collaboration opportunities.">
+  <meta property="og:title" content="GeoFusion AI | Industrial Geometry Intelligence">
+  <meta property="og:description" content="A selective public showcase for industrial 3D geometry intelligence, multimodal retrieval, anomaly analysis, and high-value technical collaboration.">
+  <meta property="og:image" content="figures/social_preview.svg">
+  <meta property="og:type" content="website">
   <style>
     :root {
       --ink: #17212b;
@@ -190,6 +194,27 @@
       border-radius: 0 18px 18px 0;
       color: var(--muted);
       line-height: 1.68;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
       box-shadow: var(--shadow);
     }
 
@@ -420,8 +445,8 @@
       </div>
       <nav class="nav">
         <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
-        <a href="architecture.md">Architecture</a>
-        <a href="technical_report.md">Technical report</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="technical_report.html">Technical report</a>
         <a href="#collaboration">Collaboration</a>
       </nav>
     </header>
@@ -432,15 +457,20 @@
           <span class="eyebrow">Public collaboration page</span>
           <h1>Where geometry becomes a conversation.</h1>
           <p class="hero-lead">
-            GeoFusion AI is a public-facing showcase for <span class="hero-emphasis">3D CAD understanding, multimodal retrieval, anomaly analysis, and engineering AI design</span>. It is built to make serious collaborators feel the depth of the work quickly, while keeping the most valuable private case-study material out of the public release.
+            GeoFusion AI is a public-facing showcase for <span class="hero-emphasis">3D CAD understanding, multimodal retrieval, anomaly analysis, and engineering AI design</span>. It is built to let the right person feel the depth of the work quickly, then want the conversation that follows.
           </p>
           <div class="cta-row">
             <a class="button button-primary" href="mailto:ngarteralebede12@gmail.com">Start a collaboration</a>
+            <a class="button" href="mailto:lebede@terasystems.ai">Contact via TeraSystemsAI</a>
             <a class="button" href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Read the repository</a>
-            <a class="button" href="architecture.md">See the system design</a>
+            <a class="button" href="architecture.html">See the system design</a>
           </div>
           <div class="hero-note">
-            This page is not trying to show everything. It is trying to leave the right impression: technical clarity, careful engineering, and enough originality to make the right person want to reach out.
+            This page is not trying to show everything. It is trying to create the right feeling: technical clarity, careful engineering, and enough originality to make a serious collaborator reach out.
+          </div>
+          <div class="contact-strip" aria-label="Direct contact options">
+            <a class="contact-pill" href="mailto:ngarteralebede12@gmail.com">ngarteralebede12@gmail.com</a>
+            <a class="contact-pill" href="mailto:lebede@terasystems.ai">lebede@terasystems.ai</a>
           </div>
         </div>
 
@@ -459,7 +489,7 @@
         <div class="section-header">
           <h2>Why this project stays with people</h2>
           <p>
-            The strongest technical portfolios do not only prove competence. They make visitors feel they have found someone who understands the problem deeply, thinks in systems, and knows what to keep private. GeoFusion AI is shaped around that idea.
+            The strongest technical portfolios do not only prove competence. They make visitors feel they have found someone who understands the problem deeply, thinks in systems, and knows what to keep private. GeoFusion AI is shaped around that standard.
           </p>
         </div>
         <div class="trust-grid">
@@ -486,7 +516,7 @@
         <div class="section-header">
           <h2>A visual language for trust</h2>
           <p>
-            These figures translate the technical stack into something easy to scan and easy to remember. They make the repository feel like a designed artifact, not just a folder of code.
+            These figures translate the technical stack into something easy to scan and hard to forget. They help the repository feel like a deliberate artifact, not a folder that happened to become public.
           </p>
         </div>
         <div class="gallery-frame">
@@ -499,19 +529,19 @@
           <article class="info-card">
             <h3>Strong enough to believe</h3>
             <p>
-              The public repository shows architecture, validation, reproducibility, and working demos. It gives collaborators confidence that the work is serious, structured, and defensible.
+              The public repository shows architecture, validation, reproducibility, and working demos. It gives collaborators a fast reason to believe the work is serious, structured, and defensible.
             </p>
           </article>
           <article class="info-card">
             <h3>Selective enough to protect value</h3>
             <p>
-              The deeper case studies, private analyses, and higher-value narratives are intentionally held back. The public version opens the door without giving away the whole house.
+              The deeper case studies, private analyses, and higher-value narratives are intentionally held back. The public version opens the door without handing over the whole map.
             </p>
           </article>
           <article class="info-card">
             <h3>Human enough to invite contact</h3>
             <p>
-              The goal is not only to inform. It is to make the right engineer, hiring manager, or research partner feel that a conversation would be worth having.
+              The goal is not only to inform. It is to make the right engineer, hiring manager, or research partner feel that starting a conversation would be worth their time.
             </p>
           </article>
         </div>
@@ -521,12 +551,15 @@
         <div class="section-header">
           <h2>Built to open the right doors</h2>
           <p>
-            If you work at the intersection of geometry, manufacturing, simulation, retrieval, or applied AI systems, this repository is a strong entry point for conversation. The public work is broad enough to establish trust and focused enough to suggest where deeper collaboration can go.
+            If you work at the intersection of geometry, manufacturing, simulation, retrieval, or applied AI systems, this repository is a strong entry point for conversation. The public work is broad enough to establish trust and focused enough to suggest where deeper collaboration can go next.
           </p>
         </div>
         <div class="contact-grid">
           <div class="contact-card">
             <h3>Good collaboration fits</h3>
+            <p>
+              Direct contact is intentionally visible here because the point of this public release is not passive browsing. It is to make the next message easy to send.
+            </p>
             <ul>
               <li>Industrial 3D geometry understanding and part retrieval</li>
               <li>CAD and CAE aware machine learning systems</li>
@@ -535,7 +568,8 @@
               <li>AI first infrastructure for technical product development</li>
             </ul>
             <div class="contact-links">
-              <a class="link-button button-primary" href="mailto:ngarteralebede12@gmail.com">Email for collaboration</a>
+              <a class="link-button button-primary" href="mailto:ngarteralebede12@gmail.com">ngarteralebede12@gmail.com</a>
+              <a class="link-button" href="mailto:lebede@terasystems.ai">lebede@terasystems.ai</a>
               <a class="link-button" href="https://linkedin.com/in/lebede-ngartera-82429343">LinkedIn</a>
               <a class="link-button" href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Project repository</a>
             </div>
@@ -557,7 +591,7 @@
     </main>
 
     <footer>
-      GeoFusion AI public collaboration page. Curated for meaningful technical conversations, selective visibility, and long-term professional signal.
+      GeoFusion AI public collaboration page. Reach out at ngarteralebede12@gmail.com or lebede@terasystems.ai.
     </footer>
   </div>
 </body>

@@ -1,5 +1,7 @@
 # Architecture
 
+[Open the styled architecture page](architecture.html)
+
 ![System overview](figures/system_overview.svg)
 
 ## System Goal

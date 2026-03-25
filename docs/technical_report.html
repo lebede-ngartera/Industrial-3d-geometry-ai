@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFusion AI | Technical Report</title>
+  <meta name="description" content="GeoFusion AI technical report: multimodal 3D geometry modeling, data pipeline, training protocol, retrieval system, and industrial workflows.">
+  <meta property="og:title" content="GeoFusion AI | Technical Report">
+  <meta property="og:description" content="A visually curated technical report covering GeoFusion AI model design, training, retrieval, and industrial workflow scope.">
+  <meta property="og:image" content="figures/social_preview.svg">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5d6875;
+      --card: rgba(255, 255, 255, 0.82);
+      --line: rgba(23, 33, 43, 0.12);
+      --sage: #4e7a63;
+      --clay: #c77454;
+      --steel: #3d6287;
+      --shadow: 0 18px 50px rgba(23, 33, 43, 0.12);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(78, 122, 99, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(199, 116, 84, 0.12), transparent 26%),
+        linear-gradient(180deg, #fbfaf7 0%, #f1ece2 100%);
+    }
+
+    .page-shell { width: min(1220px, calc(100% - 48px)); margin: 0 auto; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 26px 0 10px; gap: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--sage), var(--steel));
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+    }
+    .brand-mark::before, .brand-mark::after {
+      content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,0.45);
+    }
+    .brand-mark::before { inset: 9px; }
+    .brand-mark::after { inset: 16px; }
+    .brand-copy strong {
+      display: block; font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .brand-copy span { color: var(--muted); font-size: 14px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 14px; }
+    .nav a, .button {
+      text-decoration: none; color: var(--ink); font-size: 14px;
+      border: 1px solid var(--line); border-radius: 999px; padding: 11px 16px;
+      background: rgba(255,255,255,0.55); backdrop-filter: blur(8px);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+    .nav a:hover, .button:hover {
+      transform: translateY(-2px); background: rgba(255,255,255,0.9); border-color: rgba(23, 33, 43, 0.24);
+    }
+    .button-primary { background: linear-gradient(135deg, var(--ink), #2d4255); color: #fff; border-color: transparent; }
+    .hero {
+      display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 34px; align-items: center;
+      padding: 42px 0 40px; min-height: 58vh;
+    }
+    .eyebrow {
+      display: inline-block; padding: 8px 14px; border-radius: 999px;
+      background: rgba(78, 122, 99, 0.12); color: var(--sage);
+      font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    h1 {
+      margin: 18px 0 18px; font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(42px, 6vw, 68px); line-height: 0.95; letter-spacing: -0.03em;
+    }
+    .hero-lead, .section-header p, .report-card p, .report-card li, .summary-card p, .summary-card li {
+      color: var(--muted); line-height: 1.72; font-size: 18px;
+    }
+    .hero-lead { max-width: 700px; margin-bottom: 24px; }
+    .cta-row, .contact-strip { display: flex; flex-wrap: wrap; gap: 12px; }
+    .cta-row { margin: 28px 0 18px; }
+    .contact-pill {
+      display: inline-flex; align-items: center; padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.72); border: 1px solid var(--line);
+      color: var(--ink); text-decoration: none; font-size: 14px; box-shadow: var(--shadow);
+    }
+    .hero-card, .summary-card, .report-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); backdrop-filter: blur(12px);
+    }
+    .hero-card { padding: 18px; }
+    .hero-card img { width: 100%; display: block; border-radius: 20px; background: #fff; }
+    .section { padding: 40px 0; }
+    .section-header { max-width: 780px; margin-bottom: 24px; }
+    .section-header h2 {
+      font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 3vw, 46px);
+      margin: 0 0 12px; line-height: 1.04;
+    }
+    .summary-grid, .report-grid {
+      display: grid; gap: 18px;
+    }
+    .summary-grid { grid-template-columns: repeat(3, 1fr); }
+    .report-grid { grid-template-columns: repeat(2, 1fr); }
+    .summary-card, .report-card { padding: 24px; }
+    .summary-card strong {
+      display: block; font-size: 34px; margin-bottom: 8px; font-family: Georgia, "Times New Roman", serif;
+    }
+    .report-card h3, .summary-card h3 { margin-top: 0; margin-bottom: 12px; font-size: 22px; }
+    .report-card ul, .summary-card ul { margin: 0; padding-left: 18px; }
+    footer { padding: 34px 0 56px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 1024px) {
+      .hero, .summary-grid, .report-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .page-shell { width: min(100% - 28px, 1220px); }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      h1 { font-size: 40px; }
+      .hero-lead, .section-header p, .report-card p, .report-card li, .summary-card p, .summary-card li { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-copy">
+          <strong>GeoFusion AI</strong>
+          <span>Industrial geometry intelligence, thoughtfully presented</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Landing page</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Technical report</span>
+          <h1>A report designed to be read, not endured.</h1>
+          <p class="hero-lead">
+            This technical report captures the modeling choices, training strategy, retrieval design, and industrial workflow intent behind GeoFusion AI. It stays public enough to establish trust, while keeping the highest-value case-study material for direct collaboration.
+          </p>
+          <div class="cta-row">
+            <a class="button button-primary" href="mailto:ngarteralebede12@gmail.com">Start the conversation</a>
+            <a class="button" href="mailto:lebede@terasystems.ai">Contact via TeraSystemsAI</a>
+            <a class="button" href="architecture.html">See architecture</a>
+          </div>
+          <div class="contact-strip">
+            <a class="contact-pill" href="mailto:ngarteralebede12@gmail.com">ngarteralebede12@gmail.com</a>
+            <a class="contact-pill" href="mailto:lebede@terasystems.ai">lebede@terasystems.ai</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="figures/validation_summary.svg" alt="GeoFusion AI validation summary">
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Technical scope at a glance</h2>
+          <p>
+            GeoFusion AI combines geometric encoders, transformer-based text modeling, and structured metadata encoding into a shared representation space that supports retrieval, anomaly analysis, property prediction, and generation.
+          </p>
+        </div>
+        <div class="summary-grid">
+          <article class="summary-card">
+            <strong>5</strong>
+            <p>Downstream tasks are supported by the shared multimodal embedding surface.</p>
+          </article>
+          <article class="summary-card">
+            <strong>3</strong>
+            <p>Primary modalities are aligned: geometry, engineering language, and manufacturing metadata.</p>
+          </article>
+          <article class="summary-card">
+            <strong>37</strong>
+            <p>Public validation tests reinforce that the repository is more than presentation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Modeling system</h2>
+          <p>
+            The architecture follows a multi-encoder fusion pattern. Each input modality is processed by a dedicated encoder, projected into a common 256-dimensional space, and aligned through symmetric NT-Xent contrastive learning.
+          </p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>Geometry encoder</h3>
+            <p>PointNet++ or DGCNN transform raw point clouds into compact embeddings through hierarchical abstraction or dynamic graph construction.</p>
+          </article>
+          <article class="report-card">
+            <h3>Text encoder</h3>
+            <p>A transformer-based sentence encoder projects engineering language into the same shared semantic space as geometry.</p>
+          </article>
+          <article class="report-card">
+            <h3>Metadata encoder</h3>
+            <p>Continuous and categorical manufacturing attributes are normalized, embedded, and projected into the fusion space.</p>
+          </article>
+          <article class="report-card">
+            <h3>Contrastive aligner</h3>
+            <p>A temperature-scaled similarity matrix and symmetric NT-Xent loss align semantically related geometry-text pairs.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Core model details</h2>
+          <p>
+            The public repository surfaces enough implementation detail to show technical seriousness without turning the entire system into a disclosure event.
+          </p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>PointNet++</h3>
+            <ul>
+              <li>Three set abstraction layers with progressively coarser sampling.</li>
+              <li>Farthest point sampling and ball query neighborhood grouping.</li>
+              <li>Global feature projection to a 256-dimensional embedding head.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>DGCNN</h3>
+            <ul>
+              <li>Four EdgeConv blocks with dynamic k-nearest-neighbor graphs.</li>
+              <li>Edge features built from local relationships in feature space.</li>
+              <li>Global max and mean pooling for the final representation.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Diffusion model</h3>
+            <ul>
+              <li>DDPM-style design with 1000 timesteps and linear noise schedule.</li>
+              <li>Residual denoiser blocks with timestep conditioning.</li>
+              <li>Conditional generation with geometry or text signals when needed.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Anomaly detector</h3>
+            <ul>
+              <li>Combines reconstruction-based and density-based scoring.</li>
+              <li>Uses calibrated thresholds for warning and critical ranges.</li>
+              <li>Targets manufacturing-oriented risk interpretation.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Data, training, and retrieval</h2>
+          <p>
+            Reproducibility matters here because credibility depends on more than the model list. The codebase therefore exposes clear datasets, augmentation logic, training control, and FAISS-backed retrieval behavior.
+          </p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>Data pipeline</h3>
+            <ul>
+              <li>Supports ModelNet40, ShapeNet, and custom point cloud formats.</li>
+              <li>Uses composable augmentation including normalization, rotation, jitter, scaling, and flips.</li>
+              <li>Generates synthetic engineering-style text metadata for multimodal training.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Training protocol</h3>
+            <ul>
+              <li>AdamW, warmup, cosine scheduling, gradient clipping, and early stopping.</li>
+              <li>YAML-driven configuration for repeatable experiments.</li>
+              <li>Supports contrastive, triplet, classification, and multi-task losses.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Retrieval system</h3>
+            <ul>
+              <li>FAISS indices support exact, approximate, and quantized search.</li>
+              <li>Bidirectional retrieval spans shape-to-shape, text-to-shape, and cross-modal modes.</li>
+              <li>Normalized vectors enable cosine-style similarity at scale.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Evaluation</h3>
+            <ul>
+              <li>Classification accuracy, Recall@K, Precision@K, mAP, and threshold-calibrated anomaly metrics.</li>
+              <li>Property prediction includes uncertainty-aware reporting.</li>
+              <li>Validation remains scoped to claims supported by the public repository.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Industrial workflow intent</h2>
+          <p>
+            The repository is public, but the engineering intent is real: part similarity, anomaly detection, property estimation, and natural-language search over geometry all reflect workflows that matter in industrial contexts.
+          </p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>Part similarity</h3>
+            <p>Encode a query part, retrieve nearest neighbors from FAISS, and support reuse or near-duplicate inspection.</p>
+          </article>
+          <article class="report-card">
+            <h3>Anomaly analysis</h3>
+            <p>Score new parts against calibrated normal baselines and classify them into interpretable risk levels.</p>
+          </article>
+          <article class="report-card">
+            <h3>Property prediction</h3>
+            <p>Estimate mass, volume, surface area, stress proxies, and manufacturability with uncertainty-aware outputs.</p>
+          </article>
+          <article class="report-card">
+            <h3>Text search</h3>
+            <p>Use engineering language such as lightweight bracket or curved support arm to retrieve candidate shapes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Selected references</h2>
+          <p>
+            The technical foundation draws from widely recognized work in point cloud learning, multimodal representation learning, and diffusion models.
+          </p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>Point cloud learning</h3>
+            <ul>
+              <li>Qi et al., PointNet++, NeurIPS 2017.</li>
+              <li>Wang et al., Dynamic Graph CNN, ACM TOG 2019.</li>
+            </ul>
+          </article>
+          <article class="report-card">
+            <h3>Multimodal alignment and generation</h3>
+            <ul>
+              <li>Radford et al., CLIP-style representation learning, ICML 2021.</li>
+              <li>Ho et al., Denoising Diffusion Probabilistic Models, NeurIPS 2020.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      GeoFusion AI technical report. For collaboration, contact ngarteralebede12@gmail.com or lebede@terasystems.ai.
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 # GeoFusion AI Technical Report
 
-[Open the collaboration landing page](/e:/GIThub_Prohect/docs/index.html)
+[Open the collaboration landing page](index.html)
+[Open the styled technical report page](technical_report.html)
 
 ## 1. Introduction
 

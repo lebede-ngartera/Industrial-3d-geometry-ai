@@ -1,6 +1,8 @@
 # GeoFusion AI
 
-**Industrial Multimodal AI for 3D CAD Geometry Understanding**
+## Industrial Multimodal AI for 3D CAD Geometry Understanding
+
+![GeoFusion AI social preview](social-preview.svg)
 
 GeoFusion AI is a deep learning platform that unifies 3D geometric representations, natural language descriptions, and engineering metadata into a shared embedding space. It supports part similarity retrieval, manufacturing anomaly detection, text-to-shape search, property prediction with uncertainty quantification, and diffusion-based shape generation. The system is designed for industrial CAD/CAE workflows where engineers need to search, classify, and reason about large collections of 3D parts.
 
@@ -26,14 +28,16 @@ The public version therefore does not include:
 4. complete presentation narratives used in direct discussions
 5. the wider private workspace surrounding this repository
 
-This keeps the repository useful as a professional hook for collaboration, networking, and work opportunities without giving away all of the deeper project value.
+This keeps the repository useful as a professional hook for collaboration, networking, and work opportunities without giving away the deeper project value that belongs in direct conversations.
 
 **Author:** Lebede Ngartera, PhD | Senior AI Engineer | TeraSystemsAI LLC  
-**Contact:** ngarteralebede12@gmail.com  
+**Contact:** [ngarteralebede12@gmail.com](mailto:ngarteralebede12@gmail.com) | [lebede@terasystems.ai](mailto:lebede@terasystems.ai)  
 **LinkedIn:** [linkedin.com/in/lebede-ngartera-82429343](https://linkedin.com/in/lebede-ngartera-82429343)  
 **ORCID:** [0000-0003-0561-1305](https://orcid.org/0000-0003-0561-1305)
 
 [Open the collaboration landing page](docs/index.html)
+[View the architecture page](docs/architecture.html)
+[View the technical report page](docs/technical_report.html)
 
 ---
 
@@ -51,7 +55,7 @@ The system follows a multi-encoder fusion design with a shared latent space. Eac
 
 ![Industrial workflow map](docs/figures/workflow_map.svg)
 
-```
+```text
 Input Modalities
     3D Point Clouds          Text Descriptions         Manufacturing Metadata
     (N x 3 coordinates)      (Engineering language)     (Material, tolerance, process)
@@ -82,21 +86,27 @@ Input Modalities
 ## Core Capabilities
 
 ### Part Similarity Retrieval
+
 Given a query 3D shape, encode it into the shared embedding space and retrieve the most similar parts from a FAISS index. Supports exact search (Flat), approximate search (IVFFlat), and quantized search (IVFPQ). Returns ranked results with cosine similarity scores. Includes near-duplicate detection and KMeans-based part clustering.
 
 ### Text-to-Geometry Search
+
 Accepts natural language queries such as "lightweight bracket with curved support arm" and retrieves 3D shapes whose embeddings best match the projected text embedding. This is powered by the contrastive alignment between the geometry and text encoder outputs.
 
 ### Anomaly Detection
+
 Detects geometric anomalies that may indicate manufacturing defects or quality risks. Uses an ensemble of reconstruction-based scoring (point cloud autoencoder with Chamfer distance) and density-based scoring (distance to nearest normal embedding cluster). Calibrated on normal data to establish warning and critical thresholds at configurable percentiles.
 
 ### Property Prediction with Uncertainty
+
 Predicts physical and manufacturing properties (mass, volume, surface area, max stress, manufacturability score) from geometry embeddings. Each prediction includes an aleatoric uncertainty estimate via learned log-variance, providing confidence scores for downstream engineering decisions.
 
 ### Diffusion-Based Shape Generation
+
 A DDPM-style generative model that learns to denoise point clouds over 1000 timesteps with a linear noise schedule. Supports unconditional generation and conditional generation with geometry or text embeddings as conditioning signals. Produces novel 3D shapes as (N x 3) point clouds.
 
 ### Cross-Modal Retrieval
+
 Bidirectional retrieval across all modalities: shape-to-shape, text-to-shape, shape-to-text, and text-to-text. Each direction uses the aligned embedding space to compute cosine similarity across stored indices.
 
 ---
@@ -121,7 +131,7 @@ This repository makes only claims that are directly supported by the current cod
 5. Reproducibility support
     The repository includes configuration files, tests, a Dockerfile, CI workflow, and a self contained local demo.
 
-Additional validation notes are recorded in [results/README.md](/e:/GIThub_Prohect/results/README.md).
+Additional validation notes are recorded in [results/README.md](results/README.md).
 
 ![Validation summary](docs/figures/validation_summary.svg)
 
@@ -130,21 +140,27 @@ Additional validation notes are recorded in [results/README.md](/e:/GIThub_Prohe
 ## Models
 
 ### PointNet++ Encoder
+
 Hierarchical point set learning with three Set Abstraction layers. SA1 samples 512 points (radius 0.2, 32 neighbors); SA2 samples 128 points (radius 0.4, 64 neighbors); SA3 applies global aggregation. Each layer uses a shared MLP with batch normalization and ReLU. Final projection maps the 1024-dim global feature to a 256-dim embedding. Supports optional surface normals as input channels.
 
 ### DGCNN Encoder
+
 Dynamic Graph CNN with four EdgeConv blocks. At each layer, a k-nearest-neighbor graph (k=20) is constructed in feature space, and edge features h(x_i, x_j minus x_i) are processed through shared MLPs. Features from all layers are concatenated, passed through a 1D convolution bottleneck, and pooled (global max + mean) to produce the final embedding.
 
 ### GNN Encoder (PyTorch Geometric)
+
 Flexible graph neural network supporting EdgeConv, GATConv (multi-head attention), and GraphSAGE convolution types. Designed for face-adjacency graphs extracted from B-Rep CAD topology, where nodes represent faces and edges represent shared edges/vertices.
 
 ### Text Encoder
+
 Transformer-based encoder using pretrained sentence-transformers (default: all-MiniLM-L6-v2). Applies mean pooling over token embeddings and projects through a two-layer MLP to the shared 256-dim space. Includes a lightweight fallback (SimpleTextEncoder) using learned embeddings and 1D convolutions for environments without HuggingFace dependencies.
 
 ### Multimodal Aligner (GeoFusionModel)
+
 The central model integrating all encoders. Computes geometry and text embeddings, projects them through learnable projection heads, and produces a temperature-scaled similarity matrix. Training uses symmetric NT-Xent loss. Optional classification head and metadata encoder for supervised and multi-signal training.
 
 ### Point Cloud Autoencoder
+
 Encoder-decoder architecture for anomaly detection. The encoder maps point clouds through Conv1d layers (3 to 64 to 128 to 256 to 512) with max pooling to a latent code. The decoder reconstructs the point cloud from the latent code. Reconstruction quality is measured by Chamfer distance.
 
 ---
@@ -152,6 +168,7 @@ Encoder-decoder architecture for anomaly detection. The encoder maps point cloud
 ## Data Pipeline
 
 ### Supported Datasets
+
 **ModelNet40:** 40-class 3D object classification benchmark. Loaded from .txt files with 2048 points per sample (xyz + normals, 6 channels).
 
 **ShapeNet:** Multi-category dataset with part segmentation annotations. Loaded from .pts files with optional text metadata.
@@ -159,6 +176,7 @@ Encoder-decoder architecture for anomaly detection. The encoder maps point cloud
 **Custom Data:** Generic PointCloudDataset supporting .npy, .npz, .txt, and .ply formats.
 
 ### Augmentation Transforms
+
 The data module provides a composable augmentation pipeline:
 Farthest Point Sampling (subsample to fixed point count),
 Normalize (center to origin, scale to unit sphere),
@@ -168,6 +186,7 @@ Random Scale (uniform 0.8x to 1.25x),
 Random Flip (reflection along any axis).
 
 ### Synthetic Text Generation
+
 TextMetadataGenerator produces engineering-style descriptions for shapes to enable multimodal training without manual annotation. Uses category-specific templates with randomized adjectives, geometric properties, and manufacturing context. Example output: "A compact elongated fuselage assembly with swept wing configuration featuring complex curvature profiles. Suitable for CNC machined in aluminum alloy."
 
 ---
@@ -185,12 +204,14 @@ Periodic checkpointing (model + optimizer state).
 Optional Weights and Biases integration.
 
 ### Loss Functions
+
 **NT-Xent Loss:** Symmetric normalized temperature-scaled cross-entropy for contrastive multimodal alignment.
 **Triplet Loss:** Margin-based metric learning for embedding separation.
 **Classification Loss:** Cross-entropy with label smoothing (default 0.1).
 **Multi-Task Loss:** Weighted combination with learnable or fixed per-task weights.
 
 ### Evaluation Metrics
+
 Classification: Top-1 and Top-5 accuracy.
 Retrieval: Recall@K, Precision@K, Mean Average Precision (mAP).
 Cross-Modal: Bidirectional retrieval metrics (geometry-to-text, text-to-geometry).
@@ -201,6 +222,7 @@ Anomaly: Threshold-calibrated detection rates at configurable percentiles.
 ## Retrieval System
 
 ### FAISS Index
+
 Supports three index types for different scale and accuracy tradeoffs:
 Flat (exact brute-force search),
 IVFFlat (approximate with 100 Voronoi cells, 10 probed at query time),
@@ -208,13 +230,14 @@ IVFPQ (product-quantized for memory efficiency).
 Metric options: cosine similarity (via L2 on normalized vectors) or L2 Euclidean distance.
 
 ### Embedding Store
+
 Manages computed embeddings with associated metadata and labels. Supports incremental addition, batch computation from model and dataloader, and persistence to disk (NumPy arrays + JSON metadata).
 
 ---
 
 ## Project Structure
 
-```
+```text
 GIThub_Prohect/
     .github/
     configs/
@@ -369,7 +392,7 @@ docker run -p 8000:8000 geofusion
 All training hyperparameters are managed through YAML configuration files in configs/. Key settings:
 
 | Parameter | Default | Description |
-|-----------|---------|-------------|
+| --------- | ------- | ----------- |
 | num_points | 2048 | Points per sample |
 | batch_size | 32 | Training batch size |
 | embed_dim | 256 | Shared embedding dimension |
@@ -402,7 +425,7 @@ The test suite covers data transforms and metadata generation, all encoder archi
 4. FAISS was chosen because scalable similarity search is necessary for real part library workflows.
 5. The anomaly workflow combines reconstruction and density scoring because one signal alone is usually not robust enough.
 
-The detailed rationale is in [docs/design_decisions.md](/e:/GIThub_Prohect/docs/design_decisions.md).
+The detailed rationale is in [docs/design_decisions.md](docs/design_decisions.md).
 
 ---
 
@@ -420,7 +443,7 @@ This project is relevant to industrial CAD and CAE workflows in several ways.
 ## Technology Stack
 
 | Category | Tools |
-|----------|-------|
+| -------- | ----- |
 | Deep Learning | PyTorch, PyTorch Geometric (optional) |
 | 3D Processing | Open3D, Trimesh |
 | NLP | HuggingFace Transformers, Sentence-Transformers |
@@ -485,12 +508,12 @@ The public code is the entry point. The full case-study narrative does not need 
 
 ## Documentation
 
-1. [docs/architecture.md](/e:/GIThub_Prohect/docs/architecture.md)
-2. [docs/design_decisions.md](/e:/GIThub_Prohect/docs/design_decisions.md)
-3. [docs/api_reference.md](/e:/GIThub_Prohect/docs/api_reference.md)
-4. [docs/technical_report.md](/e:/GIThub_Prohect/docs/technical_report.md)
-5. [docs/github_deployment.md](/e:/GIThub_Prohect/docs/github_deployment.md)
-6. [results/README.md](/e:/GIThub_Prohect/results/README.md)
+1. [docs/architecture.html](docs/architecture.html)
+2. [docs/design_decisions.md](docs/design_decisions.md)
+3. [docs/api_reference.md](docs/api_reference.md)
+4. [docs/technical_report.html](docs/technical_report.html)
+5. [docs/github_deployment.md](docs/github_deployment.md)
+6. [results/README.md](results/README.md)
 
 ---
 
