@@ -33,7 +33,7 @@ This keeps the repository useful as a professional hook for collaboration, netwo
 **LinkedIn:** [linkedin.com/in/lebede-ngartera-82429343](https://linkedin.com/in/lebede-ngartera-82429343)  
 **ORCID:** [0000-0003-0561-1305](https://orcid.org/0000-0003-0561-1305)
 
-[Open the collaboration landing page](/e:/GIThub_Prohect/docs/index.html)
+[Open the collaboration landing page](docs/index.html)
 
 ---
 
