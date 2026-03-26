@@ -167,36 +167,85 @@ Notes:
 
 ## Visual Outputs
 
+The repository now includes the final GitHub-ready PNG captures used below.
+Each image comes from the local Streamlit demo under public-safe synthetic settings, and the recapture workflow is documented in [docs/screenshot_playbook.md](docs/screenshot_playbook.md).
+
+### Overview dashboard
+
+![GeoFusion AI demo interface](docs/figures/demo_interface_snapshot.png)
+
+Caption: Branded Streamlit overview of the public synthetic workflow, showing the end-to-end demo surfaces used for preprocessing, classification, retrieval, anomaly review, and generation.
+
+### Shape classification
+
+![PointNet++ training and validation output](docs/figures/classification_training_snapshot.png)
+
+Caption: Captured synthetic classification run with fixed seed 42, stratified 260/70 train-test split, 66 samples per class, and a visible details panel confirming the exact screenshot regime.
+
 ### Shape similarity search
 
-![Shape similarity search output](docs/figures/retrieval_query_vs_results.svg)
+![Shape similarity search output](docs/figures/retrieval_query_vs_results.png)
 
-### Text-to-geometry retrieval
-
-![Text-to-geometry retrieval output](docs/figures/text_to_shape_results.svg)
+Caption: Similarity-search capture using a synthetic sphere query against a public gallery, returning top-k ranked matches from the learned geometry embedding space.
 
 ### Normal vs anomalous geometry
 
-![Normal vs anomalous geometry comparison](docs/figures/anomaly_normal_vs_anomalous.svg)
+![Normal vs anomalous geometry comparison](docs/figures/anomaly_normal_vs_anomalous.png)
 
-### Public demo interface
-
-![GeoFusion AI demo interface](docs/figures/demo_interface_snapshot.svg)
+Caption: Synthetic anomaly-review capture comparing a normal sphere against a random-noise perturbation, with visible score separation in the public demo workflow.
 
 ---
 
 ## Results (Public Subset)
 
-The metrics below come from `scripts/public_eval.py`, which evaluates a reproducible synthetic public subset of 40 training samples and 10 test samples across 5 geometry classes using 512-point clouds.
+The public release contains two kinds of evidence and they should be interpreted differently.
 
-They are intended to demonstrate functional system behavior in the public release.
-They are not presented as proprietary or production-scale industrial benchmarks.
+1. Reproducible evaluation artifacts from `scripts/public_eval.py`.
+2. Interactive Streamlit screenshots from the local synthetic demo.
+
+The evaluation artifacts demonstrate functional system behavior on a reproducible synthetic public subset of 40 training samples and 10 test samples across 5 geometry classes using 512-point clouds.
+
+The interactive screenshots illustrate how the same ideas behave in a lightweight public demo with user-controlled settings. They should be read as execution proof and operating context, not as proprietary or production-scale industrial benchmarks.
+
+### Classification Behavior Under Different Data Regimes
+
+The shape-classification demo is most useful as a data-regime illustration rather than as a ceiling-performance claim.
+
+Task:
+
+- Classes: Sphere, Cube, Cylinder, Cone, Torus
+- Random baseline: 20% accuracy
+- Split policy in the app: fixed seed and stratified 80/20 split
+
+Representative demo runs:
+
+| Regime | Samples per class | Total samples | Train/Test | Test accuracy | Interpretation |
+| ------ | ----------------- | ------------- | ---------- | ------------- | -------------- |
+| Lightweight run | 30 | 150 | 120 / 30 | 33.3% | Above random baseline, but still unstable and sensitive to limited coverage |
+| README screenshot run | 66 | 330 | 260 / 70 | 58.6% (41 / 70) | More stable than the smaller regime, but still limited by a short 4-epoch demo budget |
+
+Interpretation:
+
+- Sample density is the dominant driver of stability in this toy setup.
+- More training time can help, but it does not fully compensate for insufficient or weakly varied data.
+- The captured 58.6% screenshot is useful as deterministic proof that the public demo trains and evaluates end to end under a fixed regime.
+- The scripted `public_eval.py` metrics, not the UI screenshot, are the correct source for the repository's reproducible headline numbers.
+
+Limitations:
+
+- synthetic geometric primitives only
+- low intra-class variability
+- limited deformation and noise complexity
+- small controlled task relative to real CAD conditions
+
+### Reproducible Public Metrics
+
 Cross-modal rows use a simple linear text-projection baseline fitted on the public synthetic text templates.
 
 | Area | Metric | Value | Notes |
 | ---- | ------ | ----- | ----- |
-| Classification | Top-1 accuracy | 0.9000 | Synthetic public subset |
-| Classification | Top-5 accuracy | 1.0000 | Synthetic public subset |
+| Classification | Top-1 accuracy | 1.0000 | Reproducible synthetic public subset |
+| Classification | Top-5 accuracy | 1.0000 | Reproducible synthetic public subset |
 | Retrieval | Recall@1 | 1.0000 | Test queries vs train gallery |
 | Retrieval | Recall@5 | 1.0000 | Test queries vs train gallery |
 | Retrieval | Recall@10 | 1.0000 | Test queries vs train gallery |
@@ -207,12 +256,12 @@ Cross-modal rows use a simple linear text-projection baseline fitted on the publ
 | Anomaly workflow | Warning threshold | 1.709853 | Calibrated on normal subset |
 | Anomaly workflow | Critical threshold | 1.710062 | Calibrated on normal subset |
 
-Interpretation:
+What these public numbers support:
 
-- Classification metrics describe the lightweight public baseline on synthetic shape classes.
-- Retrieval metrics describe whether semantically related geometry is recoverable in the shared embedding space.
-- Cross-modal metrics describe whether geometry and synthetic public text templates align under the lightweight public baseline.
-- Anomaly thresholds describe the calibrated warning and critical boundaries used by the public workflow.
+- Classification metrics show that the lightweight public baseline can separate the synthetic classes under the reproducible evaluation setup.
+- Retrieval metrics show that semantically related geometry is recoverable in the shared embedding space for the public subset.
+- Cross-modal metrics show alignment between geometry and synthetic public text templates under the lightweight public baseline.
+- Anomaly thresholds show calibrated warning and critical boundaries for the public anomaly workflow.
 - Larger-scale industrial evaluation exists outside the public repository and is intentionally not published here.
 
 ---
