@@ -1,8 +1,4 @@
 torch>=2.1.0
-torch-geometric>=2.4.0
-torch-scatter
-torch-sparse
-torch-cluster
 open3d>=0.17.0
 trimesh>=4.0.0
 transformers>=4.35.0
@@ -20,3 +16,9 @@ pillow>=10.0.0
 wandb>=0.16.0
 omegaconf>=2.3.0
 h5py>=3.10.0
+
+# PyTorch Geometric stack is intentionally excluded from the default install
+# because packages like torch-scatter/torch-sparse/torch-cluster may require
+# torch to already be installed and often need platform-specific wheels.
+# Install them separately when needed, for example via the optional [pyg] extra
+# or from the official PyG wheel index after torch is installed.
