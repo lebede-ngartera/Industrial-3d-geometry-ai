@@ -246,7 +246,7 @@ Cross-modal rows use a simple linear text-projection baseline fitted on the publ
 
 | Area | Metric | Value | Notes |
 | ---- | ------ | ----- | ----- |
-| Classification | Top-1 accuracy | 0.2000 | Reproducible synthetic public subset |
+| Classification | Top-1 accuracy | 1.0000 | Reproducible synthetic public subset |
 | Classification | Top-5 accuracy | 1.0000 | Reproducible synthetic public subset |
 | Retrieval | Recall@1 | 1.0000 | Test queries vs train gallery |
 | Retrieval | Recall@5 | 1.0000 | Test queries vs train gallery |
@@ -255,12 +255,12 @@ Cross-modal rows use a simple linear text-projection baseline fitted on the publ
 | Retrieval | mAP | 1.0000 | Test queries vs train gallery |
 | Cross-modal | G2T Recall@5 | 1.0000 | Geometry vs projected text |
 | Cross-modal | T2G Recall@5 | 1.0000 | Projected text vs geometry |
-| Anomaly workflow | Warning threshold | 1.843298 | Calibrated on normal subset |
-| Anomaly workflow | Critical threshold | 1.843348 | Calibrated on normal subset |
+| Anomaly workflow | Warning threshold | 1.784467 | Calibrated on normal subset |
+| Anomaly workflow | Critical threshold | 1.788165 | Calibrated on normal subset |
 
 What these public numbers support:
 
-- Classification metrics show that the intentionally tiny 3-epoch public baseline is useful as an integration sanity check, not as a tuned performance claim.
+- Classification metrics show that the lightweight public baseline can separate the synthetic classes under the reproducible evaluation setup.
 - Retrieval metrics show that semantically related geometry is recoverable in the shared embedding space for the public subset.
 - Cross-modal metrics show alignment between geometry and synthetic public text templates under the lightweight public baseline.
 - Anomaly thresholds show calibrated warning and critical boundaries for the public anomaly workflow.
