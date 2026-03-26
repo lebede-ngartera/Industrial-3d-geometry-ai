@@ -87,13 +87,11 @@ On GitHub:
 3. Choose `Public` only if you want it discoverable by recruiters, collaborators, and hiring teams.
 4. Do not initialize the remote repository with a README if your local repository already contains one.
 
-Recommended repository naming style:
+Current public repository name:
 
-1. `GeoFusion-AI`
-2. `geofusion-ai`
-3. `industrial-3d-geometry-ai`
+1. `industrial-3d-geometry-ai`
 
-Use a name that is readable and credible. Avoid names that look temporary or misspelled if the repository is meant for external visibility.
+This is the slug already used by the live repository and GitHub Pages deployment. Keep the repository slug, Pages path, README clone instructions, and profile links aligned unless you intentionally perform a coordinated rename.
 
 ## Step 3: Add the Remote and Push
 

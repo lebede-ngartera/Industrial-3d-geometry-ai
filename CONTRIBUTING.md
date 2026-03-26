@@ -6,8 +6,8 @@ Thank you for your interest in contributing. This document describes the develop
 ## Development Setup
 
 ```bash
-git clone https://github.com/lebede-ngartera/GeoFusion-AI.git
-cd GeoFusion-AI
+git clone https://github.com/lebede-ngartera/Industrial-3d-geometry-ai.git
+cd Industrial-3d-geometry-ai
 python -m venv .venv
 source .venv/bin/activate   # Linux/macOS
 .venv\Scripts\activate      # Windows

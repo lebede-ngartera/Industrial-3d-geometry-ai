@@ -23,6 +23,10 @@ This directory records verified outcomes and evaluation status for the GeoFusion
    cross modal search
    diffusion based generation
 
+5. Public benchmark evidence
+   The reproducible synthetic benchmark is defined in [experiments/public_benchmark_manifest.md](../experiments/public_benchmark_manifest.md)
+   and the generated metrics are recorded in [public_metrics.md](public_metrics.md).
+
 ## What Is Not Claimed Yet
 
 This repository does not currently publish domain benchmark tables from a proprietary industrial CAD corpus. For that reason, no claim is made here about production retrieval uplift, manufacturing defect reduction, or deployment scale inside a real PLM environment.

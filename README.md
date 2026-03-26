@@ -37,9 +37,9 @@ This keeps the repository useful as a technical review artifact, collaboration e
 **LinkedIn:** [linkedin.com/in/lebede-ngartera-82429343](https://linkedin.com/in/lebede-ngartera-82429343)  
 **ORCID:** [0000-0003-0561-1305](https://orcid.org/0000-0003-0561-1305)
 
-[Open the collaboration landing page](docs/index.html)
-[View the architecture page](docs/architecture.html)
-[View the technical report page](docs/technical_report.html)
+[Open the live collaboration landing page](https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/)
+[View the architecture page](https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/architecture.html)
+[View the technical report page](https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/technical_report.html)
 
 ---
 
@@ -115,7 +115,7 @@ Bidirectional retrieval across all modalities: shape-to-shape, text-to-shape, sh
 
 ## Verified Results
 
-This repository makes only claims that are directly supported by the current codebase and validation runs.
+This repository makes only claims that are directly supported by the current codebase, the public Streamlit demo, and the scripted evaluation artifacts.
 
 1. Repository validation
     37 automated tests passed across data, models, and retrieval modules.
@@ -135,7 +135,7 @@ This repository makes only claims that are directly supported by the current cod
 
 Additional validation notes are recorded in [results/README.md](results/README.md).
 
-Public evaluation artifacts for the reproducible synthetic subset are recorded in [results/public_metrics.md](results/public_metrics.md).
+Public evaluation artifacts for the reproducible synthetic subset are recorded in [results/public_metrics.md](results/public_metrics.md), and the exact benchmark setup is documented in [experiments/public_benchmark_manifest.md](experiments/public_benchmark_manifest.md).
 
 ![Validation summary](docs/figures/validation_summary.svg)
 
@@ -224,13 +224,13 @@ Representative demo runs:
 | Regime | Samples per class | Total samples | Train/Test | Test accuracy | Interpretation |
 | ------ | ----------------- | ------------- | ---------- | ------------- | -------------- |
 | Lightweight run | 30 | 150 | 120 / 30 | 33.3% | Above random baseline, but still unstable and sensitive to limited coverage |
-| README screenshot run | 66 | 330 | 260 / 70 | 58.6% (41 / 70) | More stable than the smaller regime, but still limited by a short 4-epoch demo budget |
+| Presentation snapshot run | 60 | 300 | 240 / 60 | 80.0% (48 / 60) | Deterministic cached demo path used for the public screenshot and walkthrough assets |
 
 Interpretation:
 
 - Sample density is the dominant driver of stability in this toy setup.
 - More training time can help, but it does not fully compensate for insufficient or weakly varied data.
-- The captured 58.6% screenshot is useful as deterministic proof that the public demo trains and evaluates end to end under a fixed regime.
+- The captured 80.0% screenshot is useful as deterministic proof that the public demo executes the classification workflow end to end under a fixed public-safe regime.
 - The scripted `public_eval.py` metrics, not the UI screenshot, are the correct source for the repository's reproducible headline numbers.
 
 Limitations:
@@ -412,7 +412,7 @@ Manages computed embeddings with associated metadata and labels. Supports increm
 ## Project Structure
 
 ```text
-GIThub_Prohect/
+industrial-3d-geometry-ai/
     .github/
     configs/
     data/
@@ -520,8 +520,8 @@ The Streamlit application (app.py) provides a browser-based interface for explor
 ### Installation
 
 ```bash
-git clone https://github.com/lebede-ngartera/GIThub_Prohect.git
-cd GIThub_Prohect
+git clone https://github.com/lebede-ngartera/Industrial-3d-geometry-ai.git
+cd Industrial-3d-geometry-ai
 pip install -e ".[dev]"
 ```
 

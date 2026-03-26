@@ -8,7 +8,7 @@
     "num_points": 512
   },
   "classification": {
-    "top1": 1.0,
+    "top1": 0.20000000298023224,
     "top5": 1.0
   },
   "retrieval": {
@@ -30,10 +30,10 @@
     "text_embedding_note": "Linear text-projection baseline fitted on synthetic paired text templates"
   },
   "anomaly": {
-    "warning_threshold": 1.709852695465088,
-    "critical_threshold": 1.71006178855896,
-    "mean_normal_score": 1.708923101425171,
-    "std_normal_score": 0.0011618733406066895,
+    "warning_threshold": 1.8432976007461548,
+    "critical_threshold": 1.8433483839035034,
+    "mean_normal_score": 1.8430718183517456,
+    "std_normal_score": 0.0002821683883666992,
     "num_flagged_warning_or_higher": 3,
     "num_flagged_critical": 3
   }
