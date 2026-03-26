@@ -2,17 +2,16 @@
 
 import hashlib
 import logging
-import os
 import zipfile
 from pathlib import Path
 from urllib.request import urlretrieve
 
 logger = logging.getLogger(__name__)
 
-MODELNET40_URL = (
-    "https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip"
+MODELNET40_URL = "https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip"
+SHAPENET_URL = (
+    "https://shapenet.cs.stanford.edu/ericyi/shapenetcore_partanno_segmentation_benchmark_v0.zip"
 )
-SHAPENET_URL = "https://shapenet.cs.stanford.edu/ericyi/shapenetcore_partanno_segmentation_benchmark_v0.zip"
 
 
 def _download_file(url: str, dest: Path, expected_hash: str | None = None) -> Path:

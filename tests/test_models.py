@@ -1,15 +1,13 @@
 """Tests for model architectures — forward passes, output shapes."""
 
-import pytest
 import torch
 
-from geofusion.models.pointnet2 import PointNet2Encoder, PointNet2Classifier
-from geofusion.models.gnn_encoder import DGCNNEncoder
-from geofusion.models.text_encoder import SimpleTextEncoder
-from geofusion.models.multimodal import MultimodalAligner, GeoFusionModel
-from geofusion.models.anomaly import PointCloudAutoencoder, GeometryAnomalyDetector
+from geofusion.models.anomaly import GeometryAnomalyDetector, PointCloudAutoencoder
 from geofusion.models.diffusion import ShapeDiffusionModel
-
+from geofusion.models.gnn_encoder import DGCNNEncoder
+from geofusion.models.multimodal import GeoFusionModel, MultimodalAligner
+from geofusion.models.pointnet2 import PointNet2Classifier, PointNet2Encoder
+from geofusion.models.text_encoder import SimpleTextEncoder
 
 BATCH = 4
 NUM_POINTS = 256
@@ -91,7 +89,9 @@ class TestSimpleTextEncoder:
 
 class TestMultimodalAligner:
     def test_loss_not_nan(self):
-        aligner = MultimodalAligner(geometry_dim=EMBED_DIM, text_dim=EMBED_DIM, shared_dim=EMBED_DIM)
+        aligner = MultimodalAligner(
+            geometry_dim=EMBED_DIM, text_dim=EMBED_DIM, shared_dim=EMBED_DIM
+        )
         geo_emb = torch.randn(BATCH, EMBED_DIM)
         txt_emb = torch.randn(BATCH, EMBED_DIM)
         out = aligner(geo_emb, txt_emb)
@@ -109,8 +109,10 @@ class TestGeoFusionModel:
         geo_enc = PointNet2Encoder(embed_dim=EMBED_DIM, use_normals=False)
         txt_enc = SimpleTextEncoder(vocab_size=500, embed_dim=EMBED_DIM)
         model = GeoFusionModel(
-            geometry_encoder=geo_enc, text_encoder=txt_enc,
-            embed_dim=EMBED_DIM, num_classes=10,
+            geometry_encoder=geo_enc,
+            text_encoder=txt_enc,
+            embed_dim=EMBED_DIM,
+            num_classes=10,
         )
         points = torch.randn(BATCH, NUM_POINTS, 3)
         out = model(points=points)
@@ -155,8 +157,10 @@ class TestGeometryAnomalyDetector:
 class TestShapeDiffusion:
     def test_training_loss(self):
         model = ShapeDiffusionModel(
-            num_points=NUM_POINTS, hidden_dim=EMBED_DIM,
-            num_timesteps=10, condition_dim=None,
+            num_points=NUM_POINTS,
+            hidden_dim=EMBED_DIM,
+            num_timesteps=10,
+            condition_dim=None,
         )
         x = torch.randn(BATCH, NUM_POINTS, 3)
         out = model(x)
@@ -166,8 +170,10 @@ class TestShapeDiffusion:
 
     def test_sample_shape(self):
         model = ShapeDiffusionModel(
-            num_points=32, hidden_dim=EMBED_DIM,
-            num_timesteps=5, condition_dim=None,
+            num_points=32,
+            hidden_dim=EMBED_DIM,
+            num_timesteps=5,
+            condition_dim=None,
         )
         samples = model.sample(batch_size=2)
         assert samples.shape == (2, 32, 3)

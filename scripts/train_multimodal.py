@@ -45,13 +45,17 @@ def main():
 
     text_gen = TextMetadataGenerator(seed=seed)
 
-    transform = Compose([
-        FarthestPointSample(num_points),
-        NormalizePointCloud(),
-    ])
+    transform = Compose(
+        [
+            FarthestPointSample(num_points),
+            NormalizePointCloud(),
+        ]
+    )
 
     dataset = ShapeNetDataset(
-        data_root=data_cfg.get("data_root", "data/raw/shapenetcore_partanno_segmentation_benchmark_v0"),
+        data_root=data_cfg.get(
+            "data_root", "data/raw/shapenetcore_partanno_segmentation_benchmark_v0"
+        ),
         split="train",
         num_points=num_points,
         transform=transform,
@@ -63,7 +67,8 @@ def main():
     val_size = int(len(dataset) * 0.1)
     train_size = len(dataset) - val_size
     train_dataset, val_dataset = random_split(
-        dataset, [train_size, val_size],
+        dataset,
+        [train_size, val_size],
         generator=torch.Generator().manual_seed(seed),
     )
 
@@ -82,12 +87,19 @@ def main():
         }
 
     train_loader = DataLoader(
-        train_dataset, batch_size=batch_size, shuffle=True,
-        num_workers=4, collate_fn=collate_fn, drop_last=True,
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=4,
+        collate_fn=collate_fn,
+        drop_last=True,
     )
     val_loader = DataLoader(
-        val_dataset, batch_size=batch_size, shuffle=False,
-        num_workers=4, collate_fn=collate_fn,
+        val_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=4,
+        collate_fn=collate_fn,
     )
 
     # Build model
@@ -109,9 +121,7 @@ def main():
         state = checkpoint.get("model_state_dict", checkpoint)
         # Extract encoder weights
         encoder_state = {
-            k.replace("encoder.", ""): v
-            for k, v in state.items()
-            if k.startswith("encoder.")
+            k.replace("encoder.", ""): v for k, v in state.items() if k.startswith("encoder.")
         }
         if encoder_state:
             geo_encoder.load_state_dict(encoder_state, strict=False)

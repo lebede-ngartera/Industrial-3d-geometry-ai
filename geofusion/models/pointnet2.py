@@ -25,8 +25,8 @@ def square_distance(src: torch.Tensor, dst: torch.Tensor) -> torch.Tensor:
     B, N, _ = src.shape
     _, M, _ = dst.shape
     dist = -2 * torch.matmul(src, dst.permute(0, 2, 1))
-    dist += torch.sum(src ** 2, -1).unsqueeze(-1)
-    dist += torch.sum(dst ** 2, -1).unsqueeze(-2)
+    dist += torch.sum(src**2, -1).unsqueeze(-1)
+    dist += torch.sum(dst**2, -1).unsqueeze(-2)
     return dist
 
 
@@ -74,9 +74,7 @@ def index_points(points: torch.Tensor, idx: torch.Tensor) -> torch.Tensor:
     repeat_shape = list(idx.shape)
     repeat_shape[0] = 1
     batch_indices = (
-        torch.arange(B, dtype=torch.long, device=device)
-        .view(view_shape)
-        .repeat(repeat_shape)
+        torch.arange(B, dtype=torch.long, device=device).view(view_shape).repeat(repeat_shape)
     )
     new_points = points[batch_indices, idx, :]
     return new_points
@@ -99,13 +97,9 @@ def query_ball_point(
     device = xyz.device
     B, N, C = xyz.shape
     _, S, _ = new_xyz.shape
-    group_idx = (
-        torch.arange(N, dtype=torch.long, device=device)
-        .view(1, 1, N)
-        .repeat(B, S, 1)
-    )
+    group_idx = torch.arange(N, dtype=torch.long, device=device).view(1, 1, N).repeat(B, S, 1)
     sqrdists = square_distance(new_xyz, xyz)
-    group_idx[sqrdists > radius ** 2] = N
+    group_idx[sqrdists > radius**2] = N
     group_idx = group_idx.sort(dim=-1)[0][:, :, :nsample]
     # Fill with first point if not enough neighbors
     group_first = group_idx[:, :, 0].view(B, S, 1).repeat(1, 1, nsample)
@@ -200,9 +194,7 @@ class SetAbstractionLayer(nn.Module):
         grouped_xyz = xyz.view(B, 1, N, C)
 
         if points is not None:
-            new_points = torch.cat(
-                [grouped_xyz, points.view(B, 1, N, -1)], dim=-1
-            )
+            new_points = torch.cat([grouped_xyz, points.view(B, 1, N, -1)], dim=-1)
         else:
             new_points = grouped_xyz
 
@@ -231,16 +223,25 @@ class PointNet2Encoder(nn.Module):
 
         # SA layers with increasing abstraction
         self.sa1 = SetAbstractionLayer(
-            npoint=512, radius=0.2, nsample=32,
-            in_channel=in_ch, mlp=[64, 64, 128],
+            npoint=512,
+            radius=0.2,
+            nsample=32,
+            in_channel=in_ch,
+            mlp=[64, 64, 128],
         )
         self.sa2 = SetAbstractionLayer(
-            npoint=128, radius=0.4, nsample=64,
-            in_channel=128 + 3, mlp=[128, 128, 256],
+            npoint=128,
+            radius=0.4,
+            nsample=64,
+            in_channel=128 + 3,
+            mlp=[128, 128, 256],
         )
         self.sa3 = SetAbstractionLayer(
-            npoint=None, radius=None, nsample=None,
-            in_channel=256 + 3, mlp=[256, 512, 1024],
+            npoint=None,
+            radius=None,
+            nsample=None,
+            in_channel=256 + 3,
+            mlp=[256, 512, 1024],
             group_all=True,
         )
 
@@ -312,9 +313,7 @@ class PointNet2Classifier(nn.Module):
             nn.Linear(128, num_classes),
         )
 
-    def forward(
-        self, points: torch.Tensor
-    ) -> tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, points: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """
         Args:
             points: (B, N, C) input point cloud

@@ -7,11 +7,7 @@ retrieve candidate 3D designs.' — multimodal foundation model capability.
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from typing import Any
-
-import torch
-import torch.nn as nn
+from dataclasses import dataclass
 
 from geofusion.retrieval.cross_modal import CrossModalRetriever
 from geofusion.retrieval.search import SearchResult
@@ -22,6 +18,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class TextSearchResult:
     """Result from text-to-geometry search."""
+
     query: str
     results: list[SearchResult]
     num_results: int
@@ -94,9 +91,7 @@ class TextToGeometrySearch:
         """
         return [self.search(q, top_k) for q in queries]
 
-    def _interpret_results(
-        self, query: str, results: list[SearchResult]
-    ) -> str:
+    def _interpret_results(self, query: str, results: list[SearchResult]) -> str:
         """Generate human-readable interpretation of search results."""
         if not results:
             return f"No matching shapes found for: '{query}'"

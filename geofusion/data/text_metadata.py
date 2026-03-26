@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import numpy as np
 
-
 # Engineering-style description templates per category
 TEMPLATES = {
     "airplane": [
@@ -66,9 +65,21 @@ DEFAULT_TEMPLATES = [
 ]
 
 ADJECTIVES = [
-    "compact", "elongated", "symmetric", "asymmetric", "angular",
-    "curved", "lightweight", "robust", "streamlined", "modular",
-    "thin-walled", "solid", "hollow", "reinforced", "tapered",
+    "compact",
+    "elongated",
+    "symmetric",
+    "asymmetric",
+    "angular",
+    "curved",
+    "lightweight",
+    "robust",
+    "streamlined",
+    "modular",
+    "thin-walled",
+    "solid",
+    "hollow",
+    "reinforced",
+    "tapered",
 ]
 
 DETAILS = [
@@ -92,14 +103,29 @@ DETAILS = [
 WING_TYPES = ["swept", "delta", "straight", "tapered", "forward-swept"]
 
 MANUFACTURING_PROPERTIES = [
-    "injection molded", "CNC machined", "3D printed", "cast", "forged",
-    "sheet metal formed", "extruded", "stamped", "laser cut", "die cast",
+    "injection molded",
+    "CNC machined",
+    "3D printed",
+    "cast",
+    "forged",
+    "sheet metal formed",
+    "extruded",
+    "stamped",
+    "laser cut",
+    "die cast",
 ]
 
 MATERIALS = [
-    "aluminum alloy", "steel", "titanium", "carbon fiber composite",
-    "ABS plastic", "nylon", "polycarbonate", "stainless steel",
-    "magnesium alloy", "glass-filled polymer",
+    "aluminum alloy",
+    "steel",
+    "titanium",
+    "carbon fiber composite",
+    "ABS plastic",
+    "nylon",
+    "polycarbonate",
+    "stainless steel",
+    "magnesium alloy",
+    "glass-filled polymer",
 ]
 
 
@@ -165,9 +191,6 @@ class TextMetadataGenerator:
         dims = bb_max - bb_min
         aspect_ratio = dims.max() / (dims.min() + 1e-8)
 
-        # Volume approximation (convex hull-ish)
-        volume_approx = np.prod(dims)
-
         # Surface area approximation
         center = xyz.mean(axis=0)
         radii = np.linalg.norm(xyz - center, axis=1)
@@ -193,9 +216,7 @@ class TextMetadataGenerator:
         elif sym_score > 0.4:
             parts.append("moderate symmetry")
 
-        parts.append(
-            f"bounding dimensions {dims[0]:.2f} x {dims[1]:.2f} x {dims[2]:.2f}"
-        )
+        parts.append(f"bounding dimensions {dims[0]:.2f} x {dims[1]:.2f} x {dims[2]:.2f}")
 
         return "Exhibits " + ", ".join(parts) + "."
 

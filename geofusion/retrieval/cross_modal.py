@@ -9,7 +9,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from geofusion.retrieval.search import SimilaritySearch, SearchResult
+from geofusion.retrieval.search import SearchResult, SimilaritySearch
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,13 @@ class CrossModalRetriever:
                 for key in ["class_name", "category", "filename", "model_id"]:
                     if key in batch:
                         val = batch[key]
-                        meta[key] = val[i] if isinstance(val, (list, tuple)) else val[i].item() if hasattr(val[i], 'item') else str(val[i])
+                        meta[key] = (
+                            val[i]
+                            if isinstance(val, (list, tuple))
+                            else val[i].item()
+                            if hasattr(val[i], "item")
+                            else str(val[i])
+                        )
                 geo_metas.append(meta)
 
             # Text embeddings
@@ -131,17 +137,20 @@ class CrossModalRetriever:
         if hasattr(self.model, "aligner") and self.model.aligner is not None:
             # Project text to shared space
             from torch.nn.functional import normalize
-            text_proj = normalize(
-                self.model.aligner.text_proj(text_emb), dim=-1
-            ).cpu().numpy()
+
+            text_proj = normalize(self.model.aligner.text_proj(text_emb), dim=-1).cpu().numpy()
 
             # Build temporary projected index and search
-            geo_proj = normalize(
-                self.model.aligner.geometry_proj(
-                    torch.from_numpy(self.geo_embeddings).to(self.device)
-                ),
-                dim=-1,
-            ).cpu().numpy()
+            geo_proj = (
+                normalize(
+                    self.model.aligner.geometry_proj(
+                        torch.from_numpy(self.geo_embeddings).to(self.device)
+                    ),
+                    dim=-1,
+                )
+                .cpu()
+                .numpy()
+            )
 
             # Cosine similarity
             similarities = (text_proj @ geo_proj.T).squeeze(0)
@@ -149,12 +158,14 @@ class CrossModalRetriever:
 
             results = []
             for idx in top_indices:
-                results.append(SearchResult(
-                    index=int(idx),
-                    distance=float(1 - similarities[idx]),
-                    score=float(similarities[idx]),
-                    metadata=self.geo_metadata[idx],
-                ))
+                results.append(
+                    SearchResult(
+                        index=int(idx),
+                        distance=float(1 - similarities[idx]),
+                        score=float(similarities[idx]),
+                        metadata=self.geo_metadata[idx],
+                    )
+                )
             return results
 
         # Fallback: direct embedding search
@@ -227,7 +238,9 @@ class CrossModalRetriever:
         """Get summary statistics of the retrieval index."""
         stats = {
             "num_geometry_entries": len(self.geo_metadata),
-            "geometry_embed_dim": self.geo_embeddings.shape[1] if self.geo_embeddings is not None else 0,
+            "geometry_embed_dim": self.geo_embeddings.shape[1]
+            if self.geo_embeddings is not None
+            else 0,
         }
         if self.text_embeddings is not None:
             stats["num_text_entries"] = len(self.text_metadata)

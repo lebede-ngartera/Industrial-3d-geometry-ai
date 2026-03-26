@@ -54,7 +54,6 @@ class PointCloudDenoiser(nn.Module):
             nn.Linear(hidden_dim, hidden_dim),
         )
 
-        in_dim = point_dim
         if condition_dim is not None:
             self.cond_proj = nn.Linear(condition_dim, hidden_dim)
             in_dim_first = point_dim + hidden_dim  # inject condition via concat
@@ -72,13 +71,15 @@ class PointCloudDenoiser(nn.Module):
         self.layers = nn.ModuleList()
         for _ in range(num_layers):
             self.layers.append(
-                nn.ModuleDict({
-                    "conv1": nn.Conv1d(hidden_dim, hidden_dim, 1),
-                    "norm1": nn.GroupNorm(8, hidden_dim),
-                    "conv2": nn.Conv1d(hidden_dim, hidden_dim, 1),
-                    "norm2": nn.GroupNorm(8, hidden_dim),
-                    "time_proj": nn.Linear(hidden_dim, hidden_dim),
-                })
+                nn.ModuleDict(
+                    {
+                        "conv1": nn.Conv1d(hidden_dim, hidden_dim, 1),
+                        "norm1": nn.GroupNorm(8, hidden_dim),
+                        "conv2": nn.Conv1d(hidden_dim, hidden_dim, 1),
+                        "norm2": nn.GroupNorm(8, hidden_dim),
+                        "time_proj": nn.Linear(hidden_dim, hidden_dim),
+                    }
+                )
             )
 
         self.output_conv = nn.Sequential(
@@ -169,12 +170,8 @@ class ShapeDiffusionModel(nn.Module):
         self.register_buffer("betas", betas)
         self.register_buffer("alphas_cumprod", alphas_cumprod)
         self.register_buffer("sqrt_alphas_cumprod", torch.sqrt(alphas_cumprod))
-        self.register_buffer(
-            "sqrt_one_minus_alphas_cumprod", torch.sqrt(1.0 - alphas_cumprod)
-        )
-        self.register_buffer(
-            "sqrt_recip_alphas", torch.sqrt(1.0 / alphas)
-        )
+        self.register_buffer("sqrt_one_minus_alphas_cumprod", torch.sqrt(1.0 - alphas_cumprod))
+        self.register_buffer("sqrt_recip_alphas", torch.sqrt(1.0 / alphas))
         self.register_buffer(
             "posterior_variance",
             betas * (1.0 - alphas_cumprod_prev) / (1.0 - alphas_cumprod),
@@ -254,8 +251,6 @@ class ShapeDiffusionModel(nn.Module):
 
             noise_pred = self.denoiser(x, t, condition)
 
-            alpha = self.alphas_cumprod[t_idx]
-            alpha_prev = self.alphas_cumprod[t_idx - 1] if t_idx > 0 else torch.tensor(1.0)
             beta = self.betas[t_idx]
 
             # Predict x_0
@@ -268,8 +263,8 @@ class ShapeDiffusionModel(nn.Module):
                 noise = torch.randn_like(x)
                 sigma = self.posterior_variance[t_idx].sqrt()
                 x = (
-                    self.sqrt_recip_alphas[t_idx] *
-                    (x - beta / self.sqrt_one_minus_alphas_cumprod[t_idx] * noise_pred)
+                    self.sqrt_recip_alphas[t_idx]
+                    * (x - beta / self.sqrt_one_minus_alphas_cumprod[t_idx] * noise_pred)
                     + sigma * noise
                 )
             else:

@@ -11,6 +11,7 @@ import torch.nn as nn
 
 try:
     from transformers import AutoModel, AutoTokenizer
+
     HAS_TRANSFORMERS = True
 except ImportError:
     HAS_TRANSFORMERS = False
@@ -33,8 +34,7 @@ class TextEncoder(nn.Module):
         super().__init__()
         if not HAS_TRANSFORMERS:
             raise ImportError(
-                "transformers required for TextEncoder. "
-                "Install with: pip install transformers"
+                "transformers required for TextEncoder. Install with: pip install transformers"
             )
 
         self.embed_dim = embed_dim
@@ -60,14 +60,10 @@ class TextEncoder(nn.Module):
             nn.BatchNorm1d(embed_dim),
         )
 
-    def _mean_pooling(
-        self, model_output: dict, attention_mask: torch.Tensor
-    ) -> torch.Tensor:
+    def _mean_pooling(self, model_output: dict, attention_mask: torch.Tensor) -> torch.Tensor:
         """Mean pooling over token embeddings, respecting attention mask."""
         token_embeddings = model_output.last_hidden_state
-        input_mask_expanded = (
-            attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
-        )
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
         return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(
             input_mask_expanded.sum(1), min=1e-9
         )
@@ -93,9 +89,9 @@ class TextEncoder(nn.Module):
         device = next(self.projection.parameters()).device
         encoded = {k: v.to(device) for k, v in encoded.items()}
 
-        with torch.set_grad_enabled(self.training and any(
-            p.requires_grad for p in self.backbone.parameters()
-        )):
+        with torch.set_grad_enabled(
+            self.training and any(p.requires_grad for p in self.backbone.parameters())
+        ):
             model_output = self.backbone(**encoded)
 
         pooled = self._mean_pooling(model_output, encoded["attention_mask"])
@@ -130,14 +126,16 @@ class SimpleTextEncoder(nn.Module):
         self.embedding = nn.Embedding(vocab_size, 128, padding_idx=0)
         self.position = nn.Embedding(max_length, 128)
 
-        self.convs = nn.ModuleList([
-            nn.Sequential(
-                nn.Conv1d(128, num_filters, k, padding=k // 2),
-                nn.BatchNorm1d(num_filters),
-                nn.ReLU(),
-            )
-            for k in kernel_sizes
-        ])
+        self.convs = nn.ModuleList(
+            [
+                nn.Sequential(
+                    nn.Conv1d(128, num_filters, k, padding=k // 2),
+                    nn.BatchNorm1d(num_filters),
+                    nn.ReLU(),
+                )
+                for k in kernel_sizes
+            ]
+        )
 
         self.fc = nn.Sequential(
             nn.Linear(num_filters * len(kernel_sizes), 512),

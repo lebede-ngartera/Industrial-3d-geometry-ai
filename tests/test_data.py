@@ -1,9 +1,9 @@
 """Tests for data pipeline — datasets, transforms, text metadata."""
 
 import numpy as np
-import pytest
 import torch
 
+from geofusion.data.text_metadata import TextMetadataGenerator
 from geofusion.data.transforms import (
     Compose,
     FarthestPointSample,
@@ -14,8 +14,6 @@ from geofusion.data.transforms import (
     RandomScale,
     ToTensor,
 )
-from geofusion.data.text_metadata import TextMetadataGenerator
-
 
 # ---------------------------------------------------------------------------
 # Transform tests

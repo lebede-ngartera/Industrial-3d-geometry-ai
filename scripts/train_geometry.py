@@ -16,8 +16,8 @@ from geofusion.data.transforms import (
     RandomRotate,
     RandomScale,
 )
-from geofusion.models.pointnet2 import PointNet2Classifier
 from geofusion.models.gnn_encoder import DGCNNEncoder
+from geofusion.models.pointnet2 import PointNet2Classifier
 from geofusion.training.trainer import Trainer
 
 logger = logging.getLogger(__name__)
@@ -92,36 +92,31 @@ def main():
     num_points = data_cfg.get("num_points", 2048)
     use_normals = data_cfg.get("use_normals", True)
 
-    train_transform = Compose([
-        FarthestPointSample(num_points),
-        NormalizePointCloud(),
-        RandomRotate(axis="y"),
-        RandomJitter(sigma=0.01),
-        RandomScale(lo=0.8, hi=1.25),
-    ])
-    val_transform = Compose([
-        FarthestPointSample(num_points),
-        NormalizePointCloud(),
-    ])
+    train_transform = Compose(
+        [
+            FarthestPointSample(num_points),
+            NormalizePointCloud(),
+            RandomRotate(axis="y"),
+            RandomJitter(sigma=0.01),
+            RandomScale(lo=0.8, hi=1.25),
+        ]
+    )
 
     data_root = data_cfg.get("data_root", "data/raw/modelnet40_normal_resampled")
 
     train_dataset = ModelNet40Dataset(
-        data_root=data_root, split="train",
-        num_points=num_points, use_normals=use_normals,
+        data_root=data_root,
+        split="train",
+        num_points=num_points,
+        use_normals=use_normals,
         transform=train_transform,
     )
-    test_dataset = ModelNet40Dataset(
-        data_root=data_root, split="test",
-        num_points=num_points, use_normals=use_normals,
-        transform=val_transform,
-    )
-
     # Split train into train/val
     val_size = int(len(train_dataset) * 0.1)
     train_size = len(train_dataset) - val_size
     train_subset, val_subset = random_split(
-        train_dataset, [train_size, val_size],
+        train_dataset,
+        [train_size, val_size],
         generator=torch.Generator().manual_seed(seed),
     )
 
@@ -129,12 +124,19 @@ def main():
     num_workers = data_cfg.get("num_workers", 4)
 
     train_loader = DataLoader(
-        train_subset, batch_size=batch_size, shuffle=True,
-        num_workers=num_workers, pin_memory=True, drop_last=True,
+        train_subset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+        pin_memory=True,
+        drop_last=True,
     )
     val_loader = DataLoader(
-        val_subset, batch_size=batch_size, shuffle=False,
-        num_workers=num_workers, pin_memory=True,
+        val_subset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
     )
 
     # Model

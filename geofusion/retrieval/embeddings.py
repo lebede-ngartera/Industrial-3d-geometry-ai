@@ -110,9 +110,7 @@ class EmbeddingStore:
         if self.embeddings is None:
             self.embeddings = embeddings
         else:
-            self.embeddings = np.concatenate(
-                [self.embeddings, embeddings], axis=0
-            )
+            self.embeddings = np.concatenate([self.embeddings, embeddings], axis=0)
 
         if metadata:
             self.metadata.extend(metadata)
@@ -151,9 +149,7 @@ class EmbeddingStore:
             with open(metadata_path) as f:
                 self.metadata = json.load(f)
 
-        logger.info(
-            f"Loaded embedding store: {self.embeddings.shape[0]} samples"
-        )
+        logger.info(f"Loaded embedding store: {self.embeddings.shape[0]} samples")
 
     def __len__(self) -> int:
         return 0 if self.embeddings is None else self.embeddings.shape[0]

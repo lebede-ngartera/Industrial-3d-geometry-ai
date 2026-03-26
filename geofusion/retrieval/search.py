@@ -10,6 +10,7 @@ import numpy as np
 
 try:
     import faiss
+
     HAS_FAISS = True
 except ImportError:
     HAS_FAISS = False
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class SearchResult:
     """A single search result."""
+
     index: int
     distance: float
     score: float  # similarity score (higher = more similar)
@@ -86,9 +88,7 @@ class FAISSIndex:
             self.train(vectors)
         self.index.add(vectors.astype(np.float32))
 
-    def search(
-        self, query: np.ndarray, top_k: int = 10
-    ) -> tuple[np.ndarray, np.ndarray]:
+    def search(self, query: np.ndarray, top_k: int = 10) -> tuple[np.ndarray, np.ndarray]:
         """Search for nearest neighbors.
 
         Args:
@@ -105,9 +105,7 @@ class FAISSIndex:
         if hasattr(self.index, "nprobe"):
             self.index.nprobe = 10
 
-        distances, indices = self.index.search(
-            query.astype(np.float32), top_k
-        )
+        distances, indices = self.index.search(query.astype(np.float32), top_k)
         return distances, indices
 
     def save(self, path: str) -> None:
@@ -194,12 +192,14 @@ class SimilaritySearch:
             score = dist if self.faiss_index.metric == "cosine" else 1.0 / (1.0 + dist)
 
             meta = self.metadata[idx] if idx < len(self.metadata) else None
-            results.append(SearchResult(
-                index=idx,
-                distance=dist,
-                score=score,
-                metadata=meta,
-            ))
+            results.append(
+                SearchResult(
+                    index=idx,
+                    distance=dist,
+                    score=score,
+                    metadata=meta,
+                )
+            )
 
         return results
 
@@ -221,9 +221,7 @@ class SimilaritySearch:
                 dist = float(distances[q, i])
                 score = dist if self.faiss_index.metric == "cosine" else 1.0 / (1.0 + dist)
                 meta = self.metadata[idx] if idx < len(self.metadata) else None
-                results.append(SearchResult(
-                    index=idx, distance=dist, score=score, metadata=meta
-                ))
+                results.append(SearchResult(index=idx, distance=dist, score=score, metadata=meta))
             all_results.append(results)
 
         return all_results

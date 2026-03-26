@@ -141,15 +141,11 @@ def compute_cross_modal_metrics(
     top_k = top_k or [1, 5, 10]
 
     # Geometry -> Text retrieval
-    g2t_metrics = compute_retrieval_metrics(
-        geo_embeddings, text_embeddings, labels, labels, top_k
-    )
+    g2t_metrics = compute_retrieval_metrics(geo_embeddings, text_embeddings, labels, labels, top_k)
     g2t_metrics = {f"g2t_{k}": v for k, v in g2t_metrics.items()}
 
     # Text -> Geometry retrieval
-    t2g_metrics = compute_retrieval_metrics(
-        text_embeddings, geo_embeddings, labels, labels, top_k
-    )
+    t2g_metrics = compute_retrieval_metrics(text_embeddings, geo_embeddings, labels, labels, top_k)
     t2g_metrics = {f"t2g_{k}": v for k, v in t2g_metrics.items()}
 
     metrics = {}

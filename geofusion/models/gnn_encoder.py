@@ -19,6 +19,7 @@ try:
         global_mean_pool,
         knn_graph,
     )
+
     HAS_PYG = True
 except ImportError:
     HAS_PYG = False
@@ -37,7 +38,7 @@ def knn_graph_batch(x: torch.Tensor, k: int = 20) -> torch.Tensor:
     B, N, C = x.shape
     # Pairwise distances within each batch
     inner = -2 * torch.matmul(x, x.transpose(2, 1))
-    xx = torch.sum(x ** 2, dim=2, keepdim=True)
+    xx = torch.sum(x**2, dim=2, keepdim=True)
     pairwise_dist = -xx - inner - xx.transpose(2, 1)
 
     # Top-k neighbors
@@ -45,17 +46,10 @@ def knn_graph_batch(x: torch.Tensor, k: int = 20) -> torch.Tensor:
 
     # Build edge_index in COO format
     device = x.device
-    batch_offset = (
-        torch.arange(B, device=device).view(-1, 1, 1) * N
-    )  # (B, 1, 1)
+    batch_offset = torch.arange(B, device=device).view(-1, 1, 1) * N  # (B, 1, 1)
     idx = idx + batch_offset  # global indices
 
-    src = (
-        torch.arange(N, device=device)
-        .view(1, -1, 1)
-        .repeat(B, 1, k)
-        + batch_offset
-    )
+    src = torch.arange(N, device=device).view(1, -1, 1).repeat(B, 1, k) + batch_offset
 
     edge_index = torch.stack([src.reshape(-1), idx.reshape(-1)], dim=0)
     return edge_index
@@ -89,7 +83,7 @@ class EdgeConvBlock(nn.Module):
         # k-NN graph
         x_t = x.permute(0, 2, 1)  # (B, N, C)
         inner = -2 * torch.matmul(x_t, x_t.transpose(2, 1))
-        xx = torch.sum(x_t ** 2, dim=2, keepdim=True)
+        xx = torch.sum(x_t**2, dim=2, keepdim=True)
         pairwise_dist = -xx - inner - xx.transpose(2, 1)
         idx = pairwise_dist.topk(k=self.k, dim=-1)[1]  # (B, N, k)
 
@@ -159,7 +153,7 @@ class DGCNNEncoder(nn.Module):
         """
         x = points[:, :, :3].permute(0, 2, 1)  # (B, 3, N)
 
-        x1 = self.edge_conv1(x)   # (B, 64, N)
+        x1 = self.edge_conv1(x)  # (B, 64, N)
         x2 = self.edge_conv2(x1)  # (B, 64, N)
         x3 = self.edge_conv3(x2)  # (B, 128, N)
         x4 = self.edge_conv4(x3)  # (B, 256, N)
@@ -168,8 +162,8 @@ class DGCNNEncoder(nn.Module):
         x = self.conv5(x)  # (B, 1024, N)
 
         # Global feature: max + average pooling
-        x_max = x.max(dim=-1)[0]       # (B, 1024)
-        x_avg = x.mean(dim=-1)         # (B, 1024)
+        x_max = x.max(dim=-1)[0]  # (B, 1024)
+        x_avg = x.mean(dim=-1)  # (B, 1024)
         x = torch.cat([x_max, x_avg], dim=1)  # (B, 2048)
 
         x = self.fc(x)  # (B, embed_dim)
@@ -196,8 +190,7 @@ class GNNEncoder(nn.Module):
         super().__init__()
         if not HAS_PYG:
             raise ImportError(
-                "torch_geometric required for GNNEncoder. "
-                "Install with: pip install torch-geometric"
+                "torch_geometric required for GNNEncoder. Install with: pip install torch-geometric"
             )
 
         self.embed_dim = embed_dim
@@ -253,12 +246,7 @@ class GNNEncoder(nn.Module):
         x = points[:, :, :3].reshape(B * N, 3)
 
         # Create batch assignment
-        batch = (
-            torch.arange(B, device=device)
-            .unsqueeze(1)
-            .repeat(1, N)
-            .reshape(-1)
-        )
+        batch = torch.arange(B, device=device).unsqueeze(1).repeat(1, N).reshape(-1)
 
         # Build k-NN graph
         edge_index = knn_graph(x, k=self.k_neighbors, batch=batch, loop=False)

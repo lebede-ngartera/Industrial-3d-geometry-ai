@@ -17,8 +17,8 @@ from torch.optim import AdamW
 from torch.optim.lr_scheduler import CosineAnnealingLR, ReduceLROnPlateau
 from torch.utils.data import DataLoader
 
-from geofusion.training.losses import ClassificationLoss, MultiTaskLoss, NTXentLoss
-from geofusion.training.metrics import compute_accuracy, compute_retrieval_metrics
+from geofusion.training.losses import ClassificationLoss, NTXentLoss
+from geofusion.training.metrics import compute_accuracy
 
 logger = logging.getLogger(__name__)
 
@@ -68,13 +68,9 @@ class Trainer:
         # Scheduler
         scheduler_type = train_cfg.get("scheduler", "cosine")
         if scheduler_type == "cosine":
-            self.scheduler = CosineAnnealingLR(
-                self.optimizer, T_max=self.epochs, eta_min=1e-6
-            )
+            self.scheduler = CosineAnnealingLR(self.optimizer, T_max=self.epochs, eta_min=1e-6)
         elif scheduler_type == "plateau":
-            self.scheduler = ReduceLROnPlateau(
-                self.optimizer, mode="min", patience=5, factor=0.5
-            )
+            self.scheduler = ReduceLROnPlateau(self.optimizer, mode="min", patience=5, factor=0.5)
         else:
             self.scheduler = None
 
@@ -98,6 +94,7 @@ class Trainer:
         if self.use_wandb:
             try:
                 import wandb
+
                 self.wandb_run = wandb.init(
                     project=config["logging"].get("wandb_project", "geofusion"),
                     config=config,
@@ -155,6 +152,7 @@ class Trainer:
 
             if self.use_wandb and self.wandb_run:
                 import wandb
+
                 wandb.log(metrics)
 
             # Checkpointing
@@ -218,9 +216,7 @@ class Trainer:
             loss.backward()
 
             if self.gradient_clip > 0:
-                torch.nn.utils.clip_grad_norm_(
-                    self.model.parameters(), self.gradient_clip
-                )
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_clip)
 
             self.optimizer.step()
 

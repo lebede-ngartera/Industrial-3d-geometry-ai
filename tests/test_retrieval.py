@@ -1,15 +1,11 @@
 """Tests for retrieval system — embedding store, FAISS index, search."""
 
-import os
 import tempfile
 
 import numpy as np
-import pytest
-import torch
 
 from geofusion.retrieval.embeddings import EmbeddingStore
 from geofusion.retrieval.search import FAISSIndex, SimilaritySearch
-
 
 # ---------------------------------------------------------------------------
 # EmbeddingStore tests

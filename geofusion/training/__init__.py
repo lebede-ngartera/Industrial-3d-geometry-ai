@@ -1,13 +1,13 @@
 from geofusion.training.losses import (
-    NTXentLoss,
     ClassificationLoss,
     MultiTaskLoss,
+    NTXentLoss,
     TripletLoss,
 )
 from geofusion.training.metrics import (
     compute_accuracy,
-    compute_retrieval_metrics,
     compute_map,
+    compute_retrieval_metrics,
 )
 from geofusion.training.trainer import Trainer
 

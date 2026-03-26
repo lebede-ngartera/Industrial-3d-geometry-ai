@@ -6,10 +6,9 @@ or quality risks. Supports reconstruction-based and density-based methods.
 
 from __future__ import annotations
 
+import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
 
 
 class PointCloudAutoencoder(nn.Module):
@@ -77,9 +76,9 @@ class PointCloudAutoencoder(nn.Module):
             z: (B, latent_dim) latent code
         """
         x = points.permute(0, 2, 1)  # (B, 3, N)
-        x = self.encoder(x)          # (B, 512, N)
-        x = x.max(dim=-1)[0]         # (B, 512)
-        z = self.fc_encode(x)        # (B, latent_dim)
+        x = self.encoder(x)  # (B, 512, N)
+        x = x.max(dim=-1)[0]  # (B, 512)
+        z = self.fc_encode(x)  # (B, latent_dim)
         return z
 
     def decode(self, z: torch.Tensor) -> torch.Tensor:
@@ -91,22 +90,18 @@ class PointCloudAutoencoder(nn.Module):
         Returns:
             points: (B, N, 3) reconstructed point cloud
         """
-        x = self.fc_decode(z)        # (B, 512)
+        x = self.fc_decode(z)  # (B, 512)
         x = x.unsqueeze(-1).repeat(1, 1, self.num_points)  # (B, 512, N)
-        x = self.decoder(x)          # (B, 3, N)
-        return x.permute(0, 2, 1)    # (B, N, 3)
+        x = self.decoder(x)  # (B, 3, N)
+        return x.permute(0, 2, 1)  # (B, N, 3)
 
-    def forward(
-        self, points: torch.Tensor
-    ) -> tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, points: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         z = self.encode(points)
         reconstructed = self.decode(z)
         return reconstructed, z
 
 
-def chamfer_distance(
-    pred: torch.Tensor, target: torch.Tensor
-) -> torch.Tensor:
+def chamfer_distance(pred: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
     """Compute Chamfer distance between two point clouds.
 
     Args:
@@ -118,9 +113,9 @@ def chamfer_distance(
     """
     # pred -> target
     diff = pred.unsqueeze(2) - target.unsqueeze(1)  # (B, N, M, 3)
-    dist_matrix = (diff ** 2).sum(-1)  # (B, N, M)
+    dist_matrix = (diff**2).sum(-1)  # (B, N, M)
 
-    min_dist_pred = dist_matrix.min(dim=2)[0].mean(dim=1)   # (B,)
+    min_dist_pred = dist_matrix.min(dim=2)[0].mean(dim=1)  # (B,)
     min_dist_target = dist_matrix.min(dim=1)[0].mean(dim=1)  # (B,)
 
     return min_dist_pred + min_dist_target
@@ -217,13 +212,11 @@ class GeometryAnomalyDetector(nn.Module):
         elif self.method == "density":
             z = self.autoencoder.encode(xyz)
             if self.normal_embeddings.shape[0] == 0:
-                raise RuntimeError(
-                    "Call store_normal_embeddings() first for density method"
-                )
+                raise RuntimeError("Call store_normal_embeddings() first for density method")
             normal = self.normal_embeddings.to(z.device)
             # Distance to nearest normal embedding
             dists = torch.cdist(z, normal)  # (B, num_normal)
-            scores = dists.min(dim=1)[0]    # (B,)
+            scores = dists.min(dim=1)[0]  # (B,)
 
         elif self.method == "ensemble":
             reconstructed, z = self.autoencoder(xyz)
@@ -242,9 +235,7 @@ class GeometryAnomalyDetector(nn.Module):
 
         return scores
 
-    def detect(
-        self, points: torch.Tensor
-    ) -> tuple[torch.Tensor, torch.Tensor]:
+    def detect(self, points: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """Detect anomalies in input point clouds.
 
         Args:
@@ -262,9 +253,7 @@ class GeometryAnomalyDetector(nn.Module):
         is_anomaly = scores > self.threshold
         return is_anomaly, scores
 
-    def forward(
-        self, points: torch.Tensor
-    ) -> dict[str, torch.Tensor]:
+    def forward(self, points: torch.Tensor) -> dict[str, torch.Tensor]:
         """Training forward pass."""
         xyz = points[:, :, :3]
         reconstructed, z = self.autoencoder(xyz)

@@ -17,9 +17,7 @@ class NTXentLoss(nn.Module):
         super().__init__()
         self.temperature = temperature
 
-    def forward(
-        self, z_i: torch.Tensor, z_j: torch.Tensor
-    ) -> torch.Tensor:
+    def forward(self, z_i: torch.Tensor, z_j: torch.Tensor) -> torch.Tensor:
         """
         Args:
             z_i: (B, D) embeddings from modality 1
@@ -69,9 +67,7 @@ class ClassificationLoss(nn.Module):
         super().__init__()
         self.loss_fn = nn.CrossEntropyLoss(label_smoothing=label_smoothing)
 
-    def forward(
-        self, logits: torch.Tensor, targets: torch.Tensor
-    ) -> torch.Tensor:
+    def forward(self, logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
         return self.loss_fn(logits, targets)
 
 

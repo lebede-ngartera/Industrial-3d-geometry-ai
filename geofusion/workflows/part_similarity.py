@@ -8,13 +8,12 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Any
 
 import numpy as np
 import torch
 import torch.nn as nn
 
-from geofusion.retrieval.search import SimilaritySearch, SearchResult
+from geofusion.retrieval.search import SearchResult, SimilaritySearch
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +21,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class SimilarityReport:
     """Report from part similarity analysis."""
+
     query_id: str
     query_category: str | None
     top_matches: list[SearchResult]
@@ -94,12 +94,14 @@ class PartSimilarityWorkflow:
         reuse_candidates = []
         for r in results:
             if r.score >= self.similarity_threshold:
-                reuse_candidates.append({
-                    "index": r.index,
-                    "score": r.score,
-                    "metadata": r.metadata,
-                    "recommendation": "REUSE" if r.score > 0.95 else "REVIEW",
-                })
+                reuse_candidates.append(
+                    {
+                        "index": r.index,
+                        "score": r.score,
+                        "metadata": r.metadata,
+                        "recommendation": "REUSE" if r.score > 0.95 else "REVIEW",
+                    }
+                )
 
         return SimilarityReport(
             query_id=query_id,
@@ -136,10 +138,7 @@ class PartSimilarityWorkflow:
                 if sim_matrix[i, j] >= threshold:
                     duplicates.append((i, j, float(sim_matrix[i, j])))
 
-        logger.info(
-            f"Found {len(duplicates)} near-duplicate pairs "
-            f"(threshold={threshold})"
-        )
+        logger.info(f"Found {len(duplicates)} near-duplicate pairs (threshold={threshold})")
         return duplicates
 
     def cluster_parts(

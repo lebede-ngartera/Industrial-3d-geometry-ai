@@ -23,12 +23,13 @@ from torch.utils.data import DataLoader, TensorDataset
 
 
 def banner(title: str) -> None:
-    print(f"\n{'='*64}")
+    print(f"\n{'=' * 64}")
     print(f"  {title}")
-    print(f"{'='*64}")
+    print(f"{'=' * 64}")
 
 
 # ── Synthetic Data Helpers ─────────────────────────────────────────────────
+
 
 def make_sphere(n: int = 1024) -> np.ndarray:
     """Uniform random points on a unit sphere."""
@@ -118,13 +119,15 @@ def demo_transforms():
     raw_pts = make_sphere(2048)
     print(f"  Raw sphere : {raw_pts.shape}, range [{raw_pts.min():.3f}, {raw_pts.max():.3f}]")
 
-    pipeline = Compose([
-        FarthestPointSample(512),
-        NormalizePointCloud(),
-        RandomRotate(max_angle=15.0),
-        RandomJitter(sigma=0.01, clip=0.05),
-        ToTensor(),
-    ])
+    pipeline = Compose(
+        [
+            FarthestPointSample(512),
+            NormalizePointCloud(),
+            RandomRotate(max_angle=15.0),
+            RandomJitter(sigma=0.01, clip=0.05),
+            ToTensor(),
+        ]
+    )
 
     augmented = pipeline(raw_pts)
     print(f"  Augmented  : {augmented.shape}, dtype={augmented.dtype}")
@@ -190,7 +193,11 @@ def demo_pointnet2_training():
             correct += (logits.argmax(1) == lbl_batch).sum().item()
             total += pts_batch.size(0)
         if (epoch + 1) % 2 == 0 or epoch == 0:
-            print(f"  Epoch {epoch+1:2d}/{epochs}  Loss={total_loss/total:.4f}  Acc={correct/total:.1%}")
+            print(
+                f"  Epoch {epoch + 1:2d}/{epochs}"
+                f"  Loss={total_loss / total:.4f}"
+                f"  Acc={correct / total:.1%}"
+            )
 
     # Evaluate
     model.eval()
@@ -242,7 +249,7 @@ def demo_similarity_search(model):
     all_emb = []
     with torch.no_grad():
         for i in range(0, len(points), 16):
-            batch = torch.from_numpy(points[i:i+16])
+            batch = torch.from_numpy(points[i : i + 16])
             _, emb = model(batch)
             all_emb.append(emb.numpy())
     embeddings = np.concatenate(all_emb, axis=0)
@@ -264,15 +271,18 @@ def demo_similarity_search(model):
 
     query_class = class_names[labels[sphere_idx]]
     print(f"\n  Query: {query_class} (index {sphere_idx})")
-    print(f"  Top-5 similar:")
+    print("  Top-5 similar:")
     for i, r in enumerate(results):
         cls = r.metadata.get("class", "?") if r.metadata else "?"
-        print(f"    {i+1}. {cls:10s}  score={r.score:.4f}  idx={r.index}")
+        print(f"    {i + 1}. {cls:10s}  score={r.score:.4f}  idx={r.index}")
 
     # Batch search
     queries = embeddings[:3]
     batch_results = search.search_batch(queries, top_k=3)
-    print(f"\n  Batch search: {len(batch_results)} queries, each returning {len(batch_results[0])} results")
+    print(
+        f"\n  Batch search: {len(batch_results)} queries,"
+        f" each returning {len(batch_results[0])} results"
+    )
     print("  [OK] Similarity search works correctly.")
 
 
@@ -298,8 +308,20 @@ def demo_anomaly_detection():
         normal_scores = detector.anomaly_score(normal)
         anomaly_scores = detector.anomaly_score(anomalous)
 
-    print(f"  Normal scores  (mean): {normal_scores.mean():.4f}  (range: {normal_scores.min():.4f} - {normal_scores.max():.4f})")
-    print(f"  Anomaly scores (mean): {anomaly_scores.mean():.4f}  (range: {anomaly_scores.min():.4f} - {anomaly_scores.max():.4f})")
+    n_mean = normal_scores.mean()
+    n_min = normal_scores.min()
+    n_max = normal_scores.max()
+    a_mean = anomaly_scores.mean()
+    a_min = anomaly_scores.min()
+    a_max = anomaly_scores.max()
+    print(
+        f"  Normal scores  (mean): {n_mean:.4f}"
+        f"  (range: {n_min:.4f} - {n_max:.4f})"
+    )
+    print(
+        f"  Anomaly scores (mean): {a_mean:.4f}"
+        f"  (range: {a_min:.4f} - {a_max:.4f})"
+    )
 
     # Brief training to improve the autoencoder
     print("\n  Training autoencoder (3 epochs on normal shapes)...")
@@ -308,18 +330,19 @@ def demo_anomaly_detection():
     for epoch in range(3):
         recon, z = detector.autoencoder(normal)
         from geofusion.models.anomaly import chamfer_distance
+
         loss = chamfer_distance(recon, normal).mean()
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        print(f"    Epoch {epoch+1}: loss={loss.item():.6f}")
+        print(f"    Epoch {epoch + 1}: loss={loss.item():.6f}")
 
     detector.eval()
     with torch.no_grad():
         normal_scores_after = detector.anomaly_score(normal)
         anomaly_scores_after = detector.anomaly_score(anomalous)
 
-    print(f"\n  After training:")
+    print("\n  After training:")
     print(f"  Normal scores  (mean): {normal_scores_after.mean():.4f}")
     print(f"  Anomaly scores (mean): {anomaly_scores_after.mean():.4f}")
     print("  [OK] Anomaly detection works correctly.")
@@ -372,12 +395,13 @@ def demo_text_metadata():
 
     for cat in categories:
         desc = gen.generate(cat)
-        print(f"  {cat:10s} -> \"{desc[:70]}...\"")
+        print(f'  {cat:10s} -> "{desc[:70]}..."')
 
     print("  [OK] Text metadata generation works correctly.")
 
 
 # ── Main ───────────────────────────────────────────────────────────────────
+
 
 def main():
     banner("GeoFusion AI — Local End-to-End Demo")
@@ -414,7 +438,7 @@ def main():
     elapsed = time.time() - t0
     banner("All Demos Completed Successfully!")
     print(f"  Total time: {elapsed:.1f}s")
-    print(f"  All 7 capabilities verified on local machine.")
+    print("  All 7 capabilities verified on local machine.")
     print()
 
 

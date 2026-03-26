@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import os
 from pathlib import Path
 from typing import Any
 
@@ -21,12 +20,46 @@ logger = logging.getLogger(__name__)
 
 # ModelNet40 class names
 MODELNET40_CLASSES = [
-    "airplane", "bathtub", "bed", "bench", "bookshelf", "bottle", "bowl", "car",
-    "chair", "cone", "cup", "curtain", "desk", "door", "dresser", "flower_pot",
-    "glass_box", "guitar", "keyboard", "lamp", "laptop", "mantel", "monitor",
-    "night_stand", "person", "piano", "plant", "radio", "range_hood", "sink",
-    "sofa", "stairs", "stool", "table", "tent", "toilet", "tv_stand", "vase",
-    "wardrobe", "xbox",
+    "airplane",
+    "bathtub",
+    "bed",
+    "bench",
+    "bookshelf",
+    "bottle",
+    "bowl",
+    "car",
+    "chair",
+    "cone",
+    "cup",
+    "curtain",
+    "desk",
+    "door",
+    "dresser",
+    "flower_pot",
+    "glass_box",
+    "guitar",
+    "keyboard",
+    "lamp",
+    "laptop",
+    "mantel",
+    "monitor",
+    "night_stand",
+    "person",
+    "piano",
+    "plant",
+    "radio",
+    "range_hood",
+    "sink",
+    "sofa",
+    "stairs",
+    "stool",
+    "table",
+    "tent",
+    "toilet",
+    "tv_stand",
+    "vase",
+    "wardrobe",
+    "xbox",
 ]
 
 
@@ -58,10 +91,12 @@ class ModelNet40Dataset(Dataset):
         self._load_file_list()
 
         if self.transform is None:
-            self.transform = Compose([
-                FarthestPointSample(num_points),
-                NormalizePointCloud(),
-            ])
+            self.transform = Compose(
+                [
+                    FarthestPointSample(num_points),
+                    NormalizePointCloud(),
+                ]
+            )
 
     def _load_file_list(self) -> None:
         """Scan data directory for point cloud files."""
@@ -78,8 +113,7 @@ class ModelNet40Dataset(Dataset):
                 self.samples.append((f, label))
 
         logger.info(
-            f"ModelNet40 [{self.split}]: {len(self.samples)} samples, "
-            f"{len(self.classes)} classes"
+            f"ModelNet40 [{self.split}]: {len(self.samples)} samples, {len(self.classes)} classes"
         )
 
     def __len__(self) -> int:
@@ -148,24 +182,22 @@ class ShapeNetDataset(Dataset):
 
         # Build category filter
         if categories:
-            self.categories = {
-                k: v for k, v in self.CATEGORY_MAP.items() if v in categories
-            }
+            self.categories = {k: v for k, v in self.CATEGORY_MAP.items() if v in categories}
         else:
             self.categories = dict(self.CATEGORY_MAP)
 
-        self.cat_to_idx = {
-            name: i for i, name in enumerate(sorted(self.categories.values()))
-        }
+        self.cat_to_idx = {name: i for i, name in enumerate(sorted(self.categories.values()))}
 
         self.samples: list[dict] = []
         self._load_file_list()
 
         if self.transform is None:
-            self.transform = Compose([
-                FarthestPointSample(num_points),
-                NormalizePointCloud(),
-            ])
+            self.transform = Compose(
+                [
+                    FarthestPointSample(num_points),
+                    NormalizePointCloud(),
+                ]
+            )
 
     def _load_file_list(self) -> None:
         """Load file list from split files."""
@@ -173,6 +205,7 @@ class ShapeNetDataset(Dataset):
 
         if split_file.exists():
             import json
+
             with open(split_file) as f:
                 file_list = json.load(f)
             for entry in file_list:
@@ -185,13 +218,15 @@ class ShapeNetDataset(Dataset):
                         pts_file = self.data_root / synset_id / f"{model_id}.pts"
                         seg_file = self.data_root / synset_id / f"{model_id}.seg"
                         if pts_file.exists():
-                            self.samples.append({
-                                "pts_file": pts_file,
-                                "seg_file": seg_file if seg_file.exists() else None,
-                                "category": self.categories[synset_id],
-                                "synset_id": synset_id,
-                                "model_id": model_id,
-                            })
+                            self.samples.append(
+                                {
+                                    "pts_file": pts_file,
+                                    "seg_file": seg_file if seg_file.exists() else None,
+                                    "category": self.categories[synset_id],
+                                    "synset_id": synset_id,
+                                    "model_id": model_id,
+                                }
+                            )
         else:
             # Fallback: scan directories
             for synset_id, cat_name in self.categories.items():
@@ -201,13 +236,15 @@ class ShapeNetDataset(Dataset):
                 for pts_file in sorted(cat_dir.glob("*.pts")):
                     model_id = pts_file.stem
                     seg_file = cat_dir / f"{model_id}.seg"
-                    self.samples.append({
-                        "pts_file": pts_file,
-                        "seg_file": seg_file if seg_file.exists() else None,
-                        "category": cat_name,
-                        "synset_id": synset_id,
-                        "model_id": model_id,
-                    })
+                    self.samples.append(
+                        {
+                            "pts_file": pts_file,
+                            "seg_file": seg_file if seg_file.exists() else None,
+                            "category": cat_name,
+                            "synset_id": synset_id,
+                            "model_id": model_id,
+                        }
+                    )
 
         logger.info(
             f"ShapeNet [{self.split}]: {len(self.samples)} samples, "
@@ -228,8 +265,6 @@ class ShapeNetDataset(Dataset):
 
         if self.transform:
             if seg_labels is not None:
-                # Keep track of which points were sampled
-                n_orig = points.shape[0]
                 combined = np.column_stack([points, seg_labels.reshape(-1, 1)])
                 combined = self.transform(combined)
                 points = combined[:, :-1]
@@ -239,9 +274,7 @@ class ShapeNetDataset(Dataset):
 
         result = {
             "points": torch.from_numpy(points).float(),
-            "label": torch.tensor(
-                self.cat_to_idx[sample["category"]], dtype=torch.long
-            ),
+            "label": torch.tensor(self.cat_to_idx[sample["category"]], dtype=torch.long),
             "category": sample["category"],
             "model_id": sample["model_id"],
         }
@@ -276,10 +309,12 @@ class PointCloudDataset(Dataset):
         self.file_paths = [Path(p) for p in file_paths]
         self.labels = labels
         self.num_points = num_points
-        self.transform = transform or Compose([
-            FarthestPointSample(num_points),
-            NormalizePointCloud(),
-        ])
+        self.transform = transform or Compose(
+            [
+                FarthestPointSample(num_points),
+                NormalizePointCloud(),
+            ]
+        )
 
     def __len__(self) -> int:
         return len(self.file_paths)
@@ -296,6 +331,7 @@ class PointCloudDataset(Dataset):
             points = np.loadtxt(filepath, delimiter=",", dtype=np.float32)
         elif filepath.suffix == ".ply":
             import trimesh
+
             mesh = trimesh.load(str(filepath))
             points = np.array(mesh.vertices, dtype=np.float32)
         else:

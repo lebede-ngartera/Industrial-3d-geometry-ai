@@ -7,12 +7,11 @@ from shape embeddings.' — connects to simulation and engineering workflows.
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +19,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class PropertyPrediction:
     """Predicted properties for a shape."""
+
     part_id: str
     predictions: dict[str, float]
     uncertainties: dict[str, float]
@@ -47,7 +47,6 @@ class PropertyPredictionHead(nn.Module):
             "max_stress",
             "manufacturability_score",
         ]
-        num_properties = len(self.property_names)
 
         # Shared backbone
         self.shared = nn.Sequential(
@@ -66,9 +65,7 @@ class PropertyPredictionHead(nn.Module):
                 nn.Linear(64, 2),  # [mean, log_var]
             )
 
-    def forward(
-        self, embeddings: torch.Tensor
-    ) -> dict[str, tuple[torch.Tensor, torch.Tensor]]:
+    def forward(self, embeddings: torch.Tensor) -> dict[str, tuple[torch.Tensor, torch.Tensor]]:
         """Predict properties with uncertainty.
 
         Args:
@@ -192,12 +189,14 @@ class PropertyPredictor:
                 part_id = batch.get("filename", [""] * points.shape[0])
                 pid = part_id[i] if isinstance(part_id, (list, tuple)) else str(part_id)
 
-                results.append(PropertyPrediction(
-                    part_id=pid,
-                    predictions=predictions,
-                    uncertainties=uncertainties,
-                    confidence=max(0.0, 1.0 - avg_unc),
-                ))
+                results.append(
+                    PropertyPrediction(
+                        part_id=pid,
+                        predictions=predictions,
+                        uncertainties=uncertainties,
+                        confidence=max(0.0, 1.0 - avg_unc),
+                    )
+                )
 
         return results
 

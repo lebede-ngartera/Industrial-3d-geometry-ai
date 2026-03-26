@@ -30,7 +30,11 @@ def demo_shape_classification(model, dataset, device):
             confidence = torch.softmax(logits, dim=1).max().item()
 
             status = "✓" if pred_label == true_label else "✗"
-            print(f"  {status} True: {true_label:15s} | Predicted: {pred_label:15s} | Confidence: {confidence:.3f}")
+            print(
+                f"  {status} True: {true_label:15s}"
+                f" | Predicted: {pred_label:15s}"
+                f" | Confidence: {confidence:.3f}"
+            )
 
 
 def demo_similarity_search(model, dataset, search_engine, device):
@@ -51,11 +55,11 @@ def demo_similarity_search(model, dataset, search_engine, device):
     results = search_engine.search(query_emb.cpu().numpy(), top_k=5)
 
     print(f"\n  Query: {query_class} (index {idx})")
-    print(f"  Top-5 similar parts:")
+    print("  Top-5 similar parts:")
     for i, r in enumerate(results):
         meta = r.metadata or {}
         cls = meta.get("class_name", "?")
-        print(f"    {i+1}. {cls:15s} | Score: {r.score:.4f} | Index: {r.index}")
+        print(f"    {i + 1}. {cls:15s} | Score: {r.score:.4f} | Index: {r.index}")
 
 
 def demo_text_search(model, retriever):
@@ -78,7 +82,7 @@ def demo_text_search(model, retriever):
             for i, r in enumerate(results):
                 meta = r.metadata or {}
                 cls = meta.get("class_name", meta.get("category", "?"))
-                print(f"    {i+1}. {cls:15s} | Score: {r.score:.4f}")
+                print(f"    {i + 1}. {cls:15s} | Score: {r.score:.4f}")
         except Exception as e:
             print(f"    (text search unavailable: {e})")
 
@@ -94,6 +98,7 @@ def main():
     args = parser.parse_args()
 
     import yaml
+
     with open(args.config) as f:
         config = yaml.safe_load(f)
 
@@ -143,6 +148,7 @@ def main():
     # Demo 2: Similarity search
     try:
         from geofusion.retrieval.search import SimilaritySearch
+
         search = SimilaritySearch(dim=embed_dim, metric="cosine")
         search.load(args.index)
         demo_similarity_search(model, dataset, search, device)

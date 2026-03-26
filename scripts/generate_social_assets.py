@@ -2,7 +2,6 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-
 TARGET_SIZE = (1200, 627)
 ROOT = Path(__file__).resolve().parents[1]
 FIGURES_DIR = ROOT / "docs" / "figures"
@@ -28,7 +27,9 @@ ASSET_SPECS = {
 }
 
 
-def render_social_crop(source_path: Path, output_path: Path, centering: tuple[float, float]) -> None:
+def render_social_crop(
+    source_path: Path, output_path: Path, centering: tuple[float, float]
+) -> None:
     with Image.open(source_path) as image:
         fitted = ImageOps.fit(
             image.convert("RGB"),

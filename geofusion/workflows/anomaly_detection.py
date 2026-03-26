@@ -8,11 +8,9 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Any
 
 import numpy as np
 import torch
-import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from geofusion.models.anomaly import GeometryAnomalyDetector
@@ -23,6 +21,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class AnomalyReport:
     """Report from anomaly detection analysis."""
+
     part_id: str
     is_anomalous: bool
     anomaly_score: float
@@ -80,12 +79,8 @@ class AnomalyDetectionWorkflow:
 
         scores_np = torch.cat(all_scores).numpy()
 
-        self.warning_threshold = float(
-            np.percentile(scores_np, self.warning_percentile)
-        )
-        self.critical_threshold = float(
-            np.percentile(scores_np, self.critical_percentile)
-        )
+        self.warning_threshold = float(np.percentile(scores_np, self.warning_percentile))
+        self.critical_threshold = float(np.percentile(scores_np, self.critical_percentile))
         self.detector.threshold = self.warning_threshold
 
         logger.info(
@@ -187,13 +182,15 @@ class AnomalyDetectionWorkflow:
                     risk_level = "normal"
                     is_anomalous = False
 
-                reports.append(AnomalyReport(
-                    part_id=pid,
-                    is_anomalous=is_anomalous,
-                    anomaly_score=score,
-                    threshold=self.warning_threshold,
-                    risk_level=risk_level,
-                ))
+                reports.append(
+                    AnomalyReport(
+                        part_id=pid,
+                        is_anomalous=is_anomalous,
+                        anomaly_score=score,
+                        threshold=self.warning_threshold,
+                        risk_level=risk_level,
+                    )
+                )
 
         logger.info(
             f"Analyzed {len(reports)} parts — "

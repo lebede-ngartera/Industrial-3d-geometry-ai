@@ -43,9 +43,7 @@ class MultimodalAligner(nn.Module):
         temperature: float = 0.07,
     ):
         super().__init__()
-        self.temperature = nn.Parameter(
-            torch.tensor(temperature).log(), requires_grad=True
-        )
+        self.temperature = nn.Parameter(torch.tensor(temperature).log(), requires_grad=True)
         self.shared_dim = shared_dim
 
         self.geometry_proj = ProjectionHead(geometry_dim, hidden_dim, shared_dim)
@@ -121,10 +119,9 @@ class MetadataEncoder(nn.Module):
         self.continuous_bn = nn.BatchNorm1d(num_continuous)
         self.continuous_fc = nn.Linear(num_continuous, 128)
 
-        self.categorical_embeddings = nn.ModuleList([
-            nn.Embedding(size, categorical_embed_dim)
-            for size in category_sizes
-        ])
+        self.categorical_embeddings = nn.ModuleList(
+            [nn.Embedding(size, categorical_embed_dim) for size in category_sizes]
+        )
         cat_total_dim = categorical_embed_dim * len(category_sizes)
 
         self.fc = nn.Sequential(
@@ -252,13 +249,8 @@ class GeoFusionModel(nn.Module):
             results.update(align_out)
 
         # Metadata encoding
-        if (
-            self.metadata_encoder is not None
-            and metadata_continuous is not None
-        ):
-            meta_emb = self.metadata_encoder(
-                metadata_continuous, metadata_categorical
-            )
+        if self.metadata_encoder is not None and metadata_continuous is not None:
+            meta_emb = self.metadata_encoder(metadata_continuous, metadata_categorical)
             results["metadata_embedding"] = meta_emb
 
         return results

@@ -48,7 +48,9 @@ def main():
 
     dataset = ModelNet40Dataset(
         data_root=config.get("data", {}).get("data_root", "data/raw/modelnet40_normal_resampled"),
-        split="test", num_points=num_points, transform=transform,
+        split="test",
+        num_points=num_points,
+        transform=transform,
     )
     dataloader = DataLoader(dataset, batch_size=64, shuffle=False, num_workers=4)
 
