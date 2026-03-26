@@ -164,6 +164,54 @@ Notes:
 
 - The public demo is designed for fast local exploration, not full production-scale evaluation.
 - The public version is intentionally lightweight so it stays reproducible without exposing private case-study assets.
+- Optional PyTorch Geometric dependencies are split into `requirements-pyg.txt` and are not required for the base demo install.
+
+---
+
+## Installation Profiles
+
+### Base install
+
+For the default demo, tests, and most repository workflows:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Development install
+
+For editable local development with test and lint tooling:
+
+```bash
+pip install -e ".[dev]"
+```
+
+### Optional PyTorch Geometric install
+
+Install PyTorch first, then install the optional PyG stack separately:
+
+```bash
+pip install torch>=2.1.0
+pip install -r requirements-pyg.txt
+```
+
+If `torch-scatter`, `torch-sparse`, or `torch-cluster` fail to build from source, use the official PyG wheel index matching your installed Torch version and platform.
+
+### CPU example
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements.txt
+pip install -r requirements-pyg.txt
+```
+
+### CUDA example
+
+```bash
+pip install torch torchvision torchaudio
+pip install -r requirements.txt
+pip install -r requirements-pyg.txt
+```
 
 ---
 
@@ -214,7 +262,6 @@ The interactive screenshots illustrate how the same ideas behave in a lightweigh
 The shape-classification demo is most useful as a data-regime illustration rather than as a ceiling-performance claim.
 
 Task:
-
 - Classes: Sphere, Cube, Cylinder, Cone, Torus
 - Random baseline: 20% accuracy
 - Split policy in the app: fixed seed and stratified 80/20 split
@@ -227,14 +274,12 @@ Representative demo runs:
 | Presentation snapshot run | 60 | 300 | 240 / 60 | 80.0% (48 / 60) | Deterministic cached demo path used for the public screenshot and walkthrough assets |
 
 Interpretation:
-
-- Sample density is the dominant driver of stability in this toy setup.
-- More training time can help, but it does not fully compensate for insufficient or weakly varied data.
-- The captured 80.0% screenshot is useful as deterministic proof that the public demo executes the classification workflow end to end under a fixed public-safe regime.
-- The scripted `public_eval.py` metrics, not the UI screenshot, are the correct source for the repository's reproducible headline numbers.
+ - Sample density is the dominant driver of stability in this toy setup.
+ - More training time can help, but it does not fully compensate for insufficient or weakly varied data.
+ - The captured 80.0% screenshot is useful as deterministic proof that the public demo executes the classification workflow end to end under a fixed public-safe regime.
+ - The scripted `public_eval.py` metrics, not the UI screenshot, are the correct source for the repository's reproducible headline numbers.
 
 Limitations:
-
 - synthetic geometric primitives only
 - low intra-class variability
 - limited deformation and noise complexity
@@ -259,7 +304,6 @@ Cross-modal rows use a simple linear text-projection baseline fitted on the publ
 | Anomaly workflow | Critical threshold | 1.788165 | Calibrated on normal subset |
 
 What these public numbers support:
-
 - Classification metrics show that the lightweight public baseline can separate the synthetic classes under the reproducible evaluation setup.
 - Retrieval metrics show that semantically related geometry is recoverable in the shared embedding space for the public subset.
 - Cross-modal metrics show alignment between geometry and synthetic public text templates under the lightweight public baseline.
@@ -273,7 +317,6 @@ What these public numbers support:
 The public repository is evaluated on a curated public-safe subset designed to demonstrate reproducible system behavior.
 
 Dataset characteristics:
-
 - Source type: synthetic geometry-like samples
 - Representation: 512-point point clouds and derived embeddings
 - Geometry classes: sphere, cube, cylinder, cone, and torus
@@ -287,7 +330,6 @@ This public subset is intentionally limited. It supports reproducibility and tec
 ## What Is Implemented vs Prototype vs Roadmap
 
 Implemented:
-
 - point-cloud geometry encoding
 - classification metrics and training workflows
 - FAISS-based similarity search
@@ -295,13 +337,11 @@ Implemented:
 - interactive local demo with multiple workflow pages
 
 Prototype / partially implemented:
-
 - property prediction with uncertainty-aware outputs
 - diffusion-based generation workflows
 - broader multimodal engineering task extensions
 
 Roadmap / intentionally not public:
-
 - full production CAD pipeline integration
 - private industrial-scale evaluation datasets
 - enterprise deployment integrations
@@ -479,7 +519,10 @@ tests/
     test_retrieval.py        FAISS index, embedding store, search tests
 docker/
     Dockerfile               Containerized deployment
+    requirements-docker.txt  Container dependency profile without optional PyG
 app.py                       Streamlit interactive dashboard
+requirements.txt             Base runtime dependencies
+requirements-pyg.txt         Optional PyTorch Geometric dependencies
 ```
 
 ### Structure Rationale
@@ -558,6 +601,8 @@ streamlit run app.py --server.port 8501
 docker build -t geofusion -f docker/Dockerfile .
 docker run -p 8000:8000 geofusion
 ```
+
+The Docker image intentionally uses `docker/requirements-docker.txt`, which excludes the optional PyG stack for more reliable CI and container builds.
 
 ---
 
