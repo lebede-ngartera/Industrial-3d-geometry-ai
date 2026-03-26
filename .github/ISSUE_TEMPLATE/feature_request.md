@@ -1,7 +1,7 @@
 ---
 name: Feature Request
 about: Suggest a new feature for GeoFusion AI
-title: "[FEATURE] "
+title: "[FEATURE]"
 labels: enhancement
 assignees: ""
 ---

@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Report a bug in GeoFusion AI
-title: "[BUG] "
+title: "[BUG]"
 labels: bug
 assignees: ""
 ---
@@ -24,7 +24,10 @@ Paste the full error traceback here.
 ```
 
 **Environment**
- - OS: [e.g., Ubuntu 22.04, Windows 11]
- - Python version: [e.g., 3.10]
- - PyTorch version: [e.g., 2.1.0]
- - CUDA version (if applicable): [e.g., 12.1]
+- OS: [e.g., Ubuntu 22.04, Windows 11]
+- Python version: [e.g., 3.10]
+- PyTorch version: [e.g., 2.1.0]
+- CUDA version (if applicable): [e.g., 12.1]
+
+**Additional context**
+Any other information, screenshots, or config files.
