@@ -1,24 +1,26 @@
 # GeoFusion AI
 
-## Industrial Multimodal AI for 3D CAD Geometry Understanding
+## Multimodal 3D CAD Intelligence for Search, Quality, and Engineering Reuse
 
-![GeoFusion AI social preview](social-preview.svg)
+![GeoFusion AI social preview](social-preview.png)
 
-GeoFusion AI is a deep learning platform that unifies 3D geometric representations, natural language descriptions, and engineering metadata into a shared embedding space. It supports part similarity retrieval, manufacturing anomaly detection, text-to-shape search, property prediction with uncertainty quantification, and diffusion-based shape generation. The system is designed for industrial CAD/CAE workflows where engineers need to search, classify, and reason about large collections of 3D parts.
+GeoFusion AI is a public-facing showcase of an industrial AI system for understanding 3D CAD parts across geometry, language, and engineering metadata. The platform aligns these modalities in a shared embedding space so the same core representation can support part similarity retrieval, anomaly review, text-guided search, property prediction with uncertainty estimates, and diffusion-based shape generation.
 
-## Public Showcase Scope
+It is positioned for CAD/CAE environments where engineers need to search large part catalogs, identify reuse candidates, surface suspicious geometry, and connect shape data to engineering context without relying on manual inspection alone.
 
-This repository is intentionally a curated public showcase.
+## Project Positioning
+
+This repository is intentionally curated as the public slice of a broader applied effort.
 
 It is designed to demonstrate:
 
-1. clear problem understanding
-2. engineering rigor
-3. reproducibility discipline
-4. design decisions
-5. industrial relevance
+1. strong industrial problem framing
+2. multimodal system design for 3D geometry workflows
+3. reproducibility and validation discipline
+4. implementation quality across models, retrieval, and demos
+5. project communication suitable for collaboration and technical review
 
-It is not intended to expose the full private working context behind the broader project.
+It is not intended to expose the full private working context behind the larger project.
 
 The public version therefore does not include:
 
@@ -28,7 +30,7 @@ The public version therefore does not include:
 4. complete presentation narratives used in direct discussions
 5. the wider private workspace surrounding this repository
 
-This keeps the repository useful as a professional hook for collaboration, networking, and work opportunities without giving away the deeper project value that belongs in direct conversations.
+This keeps the repository useful as a technical review artifact, collaboration entry point, and work-opportunity showcase without exposing non-public materials that belong in direct discussions.
 
 **Author:** Lebede Ngartera, PhD | Senior AI Engineer | TeraSystemsAI LLC  
 **Contact:** [ngarteralebede12@gmail.com](mailto:ngarteralebede12@gmail.com) | [lebede@terasystems.ai](mailto:lebede@terasystems.ai)  
@@ -180,7 +182,7 @@ Caption: Branded Streamlit overview of the public synthetic workflow, showing th
 
 ![PointNet++ training and validation output](docs/figures/classification_training_snapshot.png)
 
-Caption: Captured synthetic classification run with fixed seed 42, stratified 260/70 train-test split, 66 samples per class, and a visible details panel confirming the exact screenshot regime.
+Caption: Captured synthetic classification run in cached presentation mode with fixed seed 42, a stratified 80/20 split, 60 samples per class, and a visible details panel confirming the exact screenshot regime.
 
 ### Shape similarity search
 
