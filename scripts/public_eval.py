@@ -273,24 +273,17 @@ def write_markdown(results: dict[str, object], output_path: Path) -> None:
         "",
         "| Area | Metric | Value | Notes |",
         "| ---- | ------ | ----- | ----- |",
-        f"| Classification | Top-1 accuracy | {cls['top1']:.4f}"
-        " | Synthetic public subset |",
-        f"| Classification | Top-5 accuracy | {cls['top5']:.4f}"
-        " | Synthetic public subset |",
-        f"| Retrieval | Recall@1 | {ret['recall@1']:.4f}"
-        " | Test queries vs train gallery |",
-        f"| Retrieval | Recall@5 | {ret['recall@5']:.4f}"
-        " | Test queries vs train gallery |",
-        f"| Retrieval | Recall@10 | {ret['recall@10']:.4f}"
-        " | Test queries vs train gallery |",
+        f"| Classification | Top-1 accuracy | {cls['top1']:.4f}" " | Synthetic public subset |",
+        f"| Classification | Top-5 accuracy | {cls['top5']:.4f}" " | Synthetic public subset |",
+        f"| Retrieval | Recall@1 | {ret['recall@1']:.4f}" " | Test queries vs train gallery |",
+        f"| Retrieval | Recall@5 | {ret['recall@5']:.4f}" " | Test queries vs train gallery |",
+        f"| Retrieval | Recall@10 | {ret['recall@10']:.4f}" " | Test queries vs train gallery |",
         f"| Retrieval | Precision@5 | {ret['precision@5']:.4f}"
         " | Test queries vs train gallery |",
-        f"| Retrieval | mAP | {ret['mAP']:.4f}"
-        " | Test queries vs train gallery |",
+        f"| Retrieval | mAP | {ret['mAP']:.4f}" " | Test queries vs train gallery |",
         f"| Cross-modal | G2T Recall@5 | {cm['g2t_recall@5']:.4f}"
         " | Test geometry vs projected text |",
-        f"| Cross-modal | T2G Recall@5 | {cm['t2g_recall@5']:.4f}"
-        " | Test text vs geometry |",
+        f"| Cross-modal | T2G Recall@5 | {cm['t2g_recall@5']:.4f}" " | Test text vs geometry |",
         f"| Anomaly workflow | Warning threshold"
         f" | {an['warning_threshold']:.6f}"
         " | Calibrated on normal subset |",
@@ -444,8 +437,7 @@ def main() -> None:
             "t2g_recall@10": cross_modal["t2g_recall@10"],
             "t2g_mAP": cross_modal["t2g_mAP"],
             "text_embedding_note": (
-                "Linear text-projection baseline fitted"
-                " on synthetic paired text templates"
+                "Linear text-projection baseline fitted" " on synthetic paired text templates"
             ),
         },
         "anomaly": {

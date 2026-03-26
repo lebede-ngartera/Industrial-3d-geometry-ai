@@ -82,9 +82,7 @@ class CrossModalRetriever:
                         meta[key] = (
                             val[i]
                             if isinstance(val, (list, tuple))
-                            else val[i].item()
-                            if hasattr(val[i], "item")
-                            else str(val[i])
+                            else val[i].item() if hasattr(val[i], "item") else str(val[i])
                         )
                 geo_metas.append(meta)
 
@@ -238,9 +236,9 @@ class CrossModalRetriever:
         """Get summary statistics of the retrieval index."""
         stats = {
             "num_geometry_entries": len(self.geo_metadata),
-            "geometry_embed_dim": self.geo_embeddings.shape[1]
-            if self.geo_embeddings is not None
-            else 0,
+            "geometry_embed_dim": (
+                self.geo_embeddings.shape[1] if self.geo_embeddings is not None else 0
+            ),
         }
         if self.text_embeddings is not None:
             stats["num_text_entries"] = len(self.text_metadata)

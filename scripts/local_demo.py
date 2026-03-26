@@ -314,14 +314,8 @@ def demo_anomaly_detection():
     a_mean = anomaly_scores.mean()
     a_min = anomaly_scores.min()
     a_max = anomaly_scores.max()
-    print(
-        f"  Normal scores  (mean): {n_mean:.4f}"
-        f"  (range: {n_min:.4f} - {n_max:.4f})"
-    )
-    print(
-        f"  Anomaly scores (mean): {a_mean:.4f}"
-        f"  (range: {a_min:.4f} - {a_max:.4f})"
-    )
+    print(f"  Normal scores  (mean): {n_mean:.4f}" f"  (range: {n_min:.4f} - {n_max:.4f})")
+    print(f"  Anomaly scores (mean): {a_mean:.4f}" f"  (range: {a_min:.4f} - {a_max:.4f})")
 
     # Brief training to improve the autoencoder
     print("\n  Training autoencoder (3 epochs on normal shapes)...")
