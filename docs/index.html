@@ -247,26 +247,88 @@
       position: absolute;
       right: -12px;
       bottom: 24px;
-      width: 220px;
-      padding: 18px 18px 16px;
+      width: 240px;
+      padding: 0;
       border-radius: 22px;
-      background: rgba(23, 33, 43, 0.92);
+      background: rgba(18, 27, 36, 0.96);
       color: #f4efe7;
-      box-shadow: 0 22px 50px rgba(23, 33, 43, 0.26);
+      box-shadow: 0 24px 56px rgba(23, 33, 43, 0.32), 0 0 0 1px rgba(255,255,255,0.06);
+      overflow: hidden;
+      backdrop-filter: blur(16px);
     }
 
-    .floating-stat strong {
+    .floating-stat-accent {
+      height: 3px;
+      background: linear-gradient(90deg, var(--sage), var(--steel));
+      width: 100%;
+    }
+
+    .floating-stat-body {
+      padding: 18px 20px 20px;
+    }
+
+    .floating-stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .floating-stat-row + .floating-stat-row {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .floating-stat-number {
       display: block;
-      font-size: 36px;
-      margin-bottom: 6px;
+      font-size: 38px;
+      line-height: 1;
       font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+      letter-spacing: -0.02em;
+      color: #fff;
     }
 
-    .floating-stat span {
+    .floating-stat-label {
       display: block;
-      color: rgba(244,239,231,0.8);
-      font-size: 14px;
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .floating-stat-desc {
+      display: block;
+      color: rgba(244,239,231,0.6);
+      font-size: 12.5px;
       line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .floating-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+      padding: 3px 9px 3px 6px;
+      border-radius: 999px;
+      background: rgba(78, 122, 99, 0.2);
+      border: 1px solid rgba(78, 122, 99, 0.35);
+      font-size: 11px;
+      color: #7ecba1;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .floating-stat-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #5dbf85;
+      box-shadow: 0 0 6px #5dbf85;
+      flex-shrink: 0;
     }
 
     .section {
@@ -481,8 +543,23 @@
             <img src="figures/shape_gallery.svg" alt="Abstract public geometry gallery for GeoFusion AI">
           </div>
           <div class="floating-stat">
-            <strong>37 tests</strong>
-            <span>Validated public repository surface across data, models, retrieval, and diffusion workflows.</span>
+            <div class="floating-stat-accent"></div>
+            <div class="floating-stat-body">
+              <div class="floating-stat-row">
+                <span class="floating-stat-label">Retrieval recall</span>
+                <span class="floating-stat-number">100%</span>
+                <span class="floating-stat-desc">Geometry + cross-modal, public synthetic subset.</span>
+              </div>
+              <div class="floating-stat-row">
+                <span class="floating-stat-label">Test suite</span>
+                <span class="floating-stat-number">37 / 37</span>
+                <span class="floating-stat-desc">Data, models, retrieval &amp; diffusion.</span>
+                <span class="floating-stat-badge">
+                  <span class="floating-stat-dot"></span>
+                  All passing
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
