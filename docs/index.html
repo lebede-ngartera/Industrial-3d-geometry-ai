@@ -11,6 +11,30 @@
   <meta property="og:url" content="https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/">
   <meta property="og:image" content="figures/social_preview.svg">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GeoFusion AI | Industrial Geometry Intelligence">
+  <meta name="twitter:description" content="Multimodal AI for 3D CAD: part retrieval, anomaly detection, text-to-geometry search. Public showcase by Lebede Ngartera, PhD.">
+  <meta name="twitter:image" content="https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/figures/social_preview.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GeoFusion AI",
+  "description": "Industrial multimodal AI for 3D CAD geometry understanding, part retrieval, anomaly detection, and cross-modal engineering search.",
+  "applicationCategory": "ArtificialIntelligence",
+  "author": {
+    "@type": "Person",
+    "name": "Lebede Ngartera",
+    "honorificPrefix": "Dr.",
+    "sameAs": [
+      "https://linkedin.com/in/lebede-ngartera-82429343",
+      "https://orcid.org/0000-0003-0561-1305"
+    ]
+  },
+  "url": "https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/",
+  "license": "https://opensource.org/licenses/MIT"
+}
+  </script>
   <style>
     :root {
       --ink: #17212b;
@@ -49,13 +73,47 @@
       margin: 0 auto;
     }
 
+    .topbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-wrap .page-shell {
+      padding: 0;
+    }
+
     .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 26px 0 10px;
-      gap: 20px;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
     }
+
+    .nav a[aria-current="page"] {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(23,33,43,0.3);
+      font-weight: 600;
+    }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 600ms ease, transform 600ms ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .hero-copy, .hero-visual { opacity: 1; transform: none; }
+
+    code { background: rgba(23,33,43,0.07); padding: 2px 6px; border-radius: 5px; font-size: 0.88em; }
+
 
     .brand {
       display: flex;
@@ -382,11 +440,108 @@
       margin-top: 18px;
     }
 
+
+    .metrics-table-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    .metrics-table th {
+      background: rgba(23,33,43,0.06);
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table td {
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    .metric-value {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sage);
+    }
+
+    .table-note {
+      padding: 12px 20px;
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    .demo-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      padding: 36px 40px;
+      background: linear-gradient(135deg, rgba(23,33,43,0.96), rgba(45,66,85,0.96));
+      border-radius: var(--radius);
+      color: #f4efe7;
+      box-shadow: 0 24px 60px rgba(23,33,43,0.22);
+    }
+
+    .demo-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .demo-banner .button { background: rgba(255,255,255,0.12); color: #f4efe7; border-color: rgba(255,255,255,0.2); }
+    .demo-banner .button:hover { background: rgba(255,255,255,0.22); }
+    .demo-banner .button-primary { background: var(--sage); border-color: transparent; }
+    .demo-banner code { background: rgba(255,255,255,0.12); padding: 2px 7px; border-radius: 6px; font-size: 0.9em; }
+
+    .pub-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .pub-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 22px 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .pub-year {
+      flex-shrink: 0;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--clay);
+      min-width: 48px;
+      padding-top: 2px;
+    }
+
+    .pub-body h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; line-height: 1.4; }
+    .pub-body p { margin: 0; color: var(--muted); font-size: 14px; }
+
     footer {
       padding: 34px 0 56px;
       color: var(--muted);
       font-size: 14px;
     }
+
+    footer a { color: var(--muted); text-decoration: underline; }
 
     @keyframes fadeUp {
       from {
@@ -436,8 +591,9 @@
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="topbar">
+  <div class="topbar-wrap">
+    <div class="page-shell">
+      <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div class="brand-copy">
@@ -446,15 +602,19 @@
         </div>
       </div>
       <nav class="nav">
-        <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
-        <a href="architecture.html">Architecture</a>
+        <a href="index.html" aria-current="page">Home</a>
         <a href="technical_report.html">Technical report</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
         <a href="#collaboration">Collaboration</a>
       </nav>
     </header>
+    </div>
+  </div>
 
+  <div class="page-shell">
     <main>
-      <section class="hero">
+      <section class="hero reveal">
         <div class="hero-copy">
           <span class="eyebrow">Public collaboration page</span>
           <h1>Where geometry becomes a conversation.</h1>
@@ -481,13 +641,17 @@
             <img src="figures/shape_gallery.svg" alt="Abstract public geometry gallery for GeoFusion AI">
           </div>
           <div class="floating-stat">
-            <strong>37 tests</strong>
-            <span>Validated public repository surface across data, models, retrieval, and diffusion workflows.</span>
+            <strong>100%</strong>
+            <span>Public retrieval recall on geometry + cross-modal tasks.</span>
+            <hr style="border:none; border-top:1px solid rgba(244,239,231,0.2); margin: 10px 0; width: 100%;">
+            <strong style="font-size:22px;">37 / 37</strong>
+            <span>Tests passing across data, models, retrieval, and diffusion.</span>
           </div>
+                  <a class="contact-pill" href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID 0000-0003-0561-1305</a>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Why this project stays with people</h2>
           <p>
@@ -514,7 +678,29 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal" id="results">
+        <div class="section-header">
+          <h2>Reproducible public metrics</h2>
+          <p>Every number below is directly reproducible from <code>scripts/public_eval.py</code> on the synthetic public subset. No private data, no inflated claims.</p>
+        </div>
+        <div class="metrics-table-wrap">
+          <table class="metrics-table">
+            <thead><tr><th>Area</th><th>Metric</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Classification</td><td>Top-1 accuracy</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Classification</td><td>Top-5 accuracy</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>Recall@1</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>Recall@5</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>mAP</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Cross-modal</td><td>G→T Recall@5</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Cross-modal</td><td>T→G Recall@5</td><td class="metric-value">1.0000</td></tr>
+            </tbody>
+          </table>
+          <p class="table-note">Evaluated on public synthetic subset: 5 geometry classes, 40 train / 10 test samples, 512-point clouds.</p>
+        </div>
+      </section>
+
+      <section class="section reveal">
         <div class="section-header">
           <h2>A visual language for trust</h2>
           <p>
@@ -526,21 +712,21 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="cards">
-          <article class="info-card">
+          <article class="info-card reveal">
             <h3>Strong enough to believe</h3>
             <p>
               The public repository shows architecture, validation, reproducibility, and working demos. It gives collaborators a fast reason to believe the work is serious, structured, and defensible.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card reveal">
             <h3>Selective enough to protect value</h3>
             <p>
               The deeper case studies, private analyses, and higher-value narratives are intentionally held back. The public version opens the door without handing over the whole map.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card reveal">
             <h3>Human enough to invite contact</h3>
             <p>
               The goal is not only to inform. It is to make the right engineer, hiring manager, or research partner feel that starting a conversation would be worth their time.
@@ -549,7 +735,20 @@
         </div>
       </section>
 
-      <section class="section" id="collaboration">
+      <section class="section reveal">
+        <div class="demo-banner">
+          <div>
+            <h2 style="margin:0 0 10px; font-family: Georgia, serif; font-size: clamp(26px,3vw,38px);">Run it yourself in 60 seconds.</h2>
+            <p style="margin:0; color: var(--muted); font-size:17px; line-height:1.7;">Clone, <code>pip install -r requirements.txt</code>, and <code>streamlit run app.py</code>. No dataset download required — the public demo runs on synthetic shapes out of the box.</p>
+          </div>
+          <div class="demo-actions">
+            <a class="button button-primary" href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Clone on GitHub</a>
+            <a class="button" href="technical_report.html">Read the report</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="collaboration">
         <div class="section-header">
           <h2>Built to open the right doors</h2>
           <p>
@@ -590,11 +789,54 @@
           </aside>
         </div>
       </section>
+      <section class="section reveal" id="publications">
+        <div class="section-header">
+          <h2>Selected publications</h2>
+          <p>Research contributions grounding the technical approach in peer-reviewed methodology.</p>
+        </div>
+        <div class="pub-list">
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Bayesian RAG: Uncertainty-Aware Retrieval for Reliable Financial Question Answering</h3>
+              <p>Frontiers in Artificial Intelligence, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Hybrid Naive Bayes Models for Scam Detection: Comparative Insights From Email and Financial Fraud</h3>
+              <p>IEEE Access, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Enhancing Autonomous Systems with Bayesian Neural Networks: A Probabilistic Framework for Navigation and Decision-Making</h3>
+              <p>Frontiers in Built Environment, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2024</span>
+            <div class="pub-body">
+              <h3>Application of Bayesian Neural Networks in Healthcare: Three Case Studies</h3>
+              <p>Machine Learning and Knowledge Extraction, 2024</p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer>
-      GeoFusion AI public collaboration page. Reach out at ngarteralebede12@gmail.com or lebede@terasystems.ai.
+      <span>© 2026 GeoFusion AI — Public industrial AI showcase</span>
+      <span>Prepared by Lebede Ngartera, PhD · Senior AI Engineer · <a href="mailto:ngarteralebede12@gmail.com">Email</a> · <a href="https://linkedin.com/in/lebede-ngartera-82429343" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID</a></span>
     </footer>
   </div>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

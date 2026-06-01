@@ -9,6 +9,30 @@
   <meta property="og:description" content="A designed walkthrough of the GeoFusion AI system architecture, from ingestion and representation learning to retrieval and workflow execution.">
   <meta property="og:image" content="figures/social_preview.svg">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GeoFusion AI | Industrial Geometry Intelligence">
+  <meta name="twitter:description" content="Multimodal AI for 3D CAD: part retrieval, anomaly detection, text-to-geometry search. Public showcase by Lebede Ngartera, PhD.">
+  <meta name="twitter:image" content="https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/figures/social_preview.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GeoFusion AI",
+  "description": "Industrial multimodal AI for 3D CAD geometry understanding, part retrieval, anomaly detection, and cross-modal engineering search.",
+  "applicationCategory": "ArtificialIntelligence",
+  "author": {
+    "@type": "Person",
+    "name": "Lebede Ngartera",
+    "honorificPrefix": "Dr.",
+    "sameAs": [
+      "https://linkedin.com/in/lebede-ngartera-82429343",
+      "https://orcid.org/0000-0003-0561-1305"
+    ]
+  },
+  "url": "https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/",
+  "license": "https://opensource.org/licenses/MIT"
+}
+  </script>
   <style>
     :root {
       --ink: #17212b;
@@ -36,13 +60,48 @@
     }
 
     .page-shell { width: min(1200px, calc(100% - 48px)); margin: 0 auto; }
+
+    .topbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-wrap .page-shell {
+      padding: 0;
+    }
+
     .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 26px 0 10px;
-      gap: 20px;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
     }
+
+    .nav a[aria-current="page"] {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(23,33,43,0.3);
+      font-weight: 600;
+    }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 600ms ease, transform 600ms ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .hero-copy, .hero-visual { opacity: 1; transform: none; }
+
+    code { background: rgba(23,33,43,0.07); padding: 2px 6px; border-radius: 5px; font-size: 0.88em; }
+
     .brand { display: flex; align-items: center; gap: 14px; }
     .brand-mark {
       width: 46px; height: 46px; border-radius: 14px;
@@ -123,6 +182,94 @@
     .module-card h3, .panel h3 { margin-top: 0; margin-bottom: 12px; font-size: 22px; }
     .panel { margin-top: 18px; }
     .body-copy ul { margin: 0; padding-left: 18px; }
+
+    .metrics-table-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    .metrics-table th {
+      background: rgba(23,33,43,0.06);
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table td {
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    .metric-value {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sage);
+    }
+
+    .table-note {
+      padding: 12px 20px;
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    .pipeline-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .pipe-merge {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pipe-col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+    .pipe-node {
+      width: 100%;
+      text-align: center;
+      padding: 16px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .pipe-node small { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .pipe-node--geo { border-top: 3px solid var(--sage); }
+    .pipe-node--text { border-top: 3px solid var(--steel); }
+    .pipe-node--meta { border-top: 3px solid var(--clay); }
+    .pipe-node--model { background: rgba(23,33,43,0.05); }
+    .pipe-node--fuse { background: linear-gradient(135deg, rgba(78,122,99,0.12), rgba(61,98,135,0.12)); border-color: rgba(78,122,99,0.3); max-width: 480px; }
+    .pipe-node--space { background: linear-gradient(135deg, rgba(23,33,43,0.08), rgba(23,33,43,0.04)); font-weight: 600; font-size: 16px; max-width: 480px; }
+    .pipe-arrow { color: var(--muted); font-size: 20px; }
+
     footer { padding: 34px 0 56px; color: var(--muted); font-size: 14px; }
     @media (max-width: 1024px) {
       .hero, .metrics, .module-grid { grid-template-columns: 1fr; }
@@ -136,8 +283,9 @@
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="topbar">
+  <div class="topbar-wrap">
+    <div class="page-shell">
+      <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div class="brand-copy">
@@ -148,12 +296,16 @@
       <nav class="nav">
         <a href="index.html">Landing page</a>
         <a href="technical_report.html">Technical report</a>
+        <a href="architecture.html" aria-current="page">Architecture</a>
         <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
       </nav>
     </header>
+    </div>
+  </div>
 
+  <div class="page-shell">
     <main>
-      <section class="hero">
+      <section class="hero reveal">
         <div>
           <span class="eyebrow">System design</span>
           <h1>Architecture that keeps depth legible.</h1>
@@ -175,7 +327,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>What the architecture optimizes for</h2>
           <p>
@@ -183,22 +335,22 @@
           </p>
         </div>
         <div class="metrics">
-          <article class="metric-card">
+          <article class="metric-card reveal">
             <strong>3 layers</strong>
             <span>Representation, workflow, and product boundaries remain intentionally separated.</span>
           </article>
-          <article class="metric-card">
+          <article class="metric-card reveal">
             <strong>256D</strong>
             <span>A shared latent space gives geometry, text, and metadata a common semantic surface.</span>
           </article>
-          <article class="metric-card">
+          <article class="metric-card reveal">
             <strong>1 goal</strong>
             <span>Keep modeling depth high while preserving a system that others can reason about quickly.</span>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Logical pipeline</h2>
           <p>
@@ -208,7 +360,30 @@
         <div class="figure-card">
           <img src="figures/workflow_map.svg" alt="GeoFusion AI workflow map">
         </div>
-        <div class="panel body-copy">
+        <div class="pipeline-diagram reveal">
+          <div class="pipe-col">
+            <div class="pipe-node pipe-node--geo">3D Point Clouds<br><small>N × 3 coordinates</small></div>
+            <div class="pipe-arrow">↓</div>
+            <div class="pipe-node pipe-node--model">PointNet++ / DGCNN<br><small>Geometry Encoder</small></div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-node pipe-node--text">Text Descriptions<br><small>Engineering language</small></div>
+            <div class="pipe-arrow">↓</div>
+            <div class="pipe-node pipe-node--model">Transformer<br><small>Text Encoder</small></div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-node pipe-node--meta">Mfg. Metadata<br><small>Material, tolerance, process</small></div>
+            <div class="pipe-arrow">↓</div>
+            <div class="pipe-node pipe-node--model">Embedding + FC<br><small>Metadata Encoder</small></div>
+          </div>
+          <div class="pipe-merge">
+            <div class="pipe-arrow">↓ ↓ ↓ → fused →</div>
+            <div class="pipe-node pipe-node--fuse">Multimodal Contrastive Aligner<br><small>NT-Xent · temperature-scaled</small></div>
+            <div class="pipe-arrow">↓</div>
+            <div class="pipe-node pipe-node--space">Shared Embedding Space<br><small>256-dim · cosine-aligned</small></div>
+          </div>
+        </div>
+        <div class="panel body-copy reveal">
           <h3>Pipeline stages</h3>
           <ul>
             <li>Data ingestion: public datasets and custom point cloud files enter through dataset adapters.</li>
@@ -221,7 +396,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Module interfaces</h2>
           <p>
@@ -229,34 +404,34 @@
           </p>
         </div>
         <div class="module-grid body-copy">
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>geofusion.data</h3>
             <p>Dataset loading, transforms, synthetic metadata generation, and the input conventions that make training reproducible.</p>
           </article>
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>geofusion.models</h3>
             <p>Geometry encoders, text encoders, the multimodal aligner, anomaly models, and the diffusion model.</p>
           </article>
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>geofusion.retrieval</h3>
             <p>FAISS indexing, embedding storage, and bidirectional cross-modal retrieval over aligned vectors.</p>
           </article>
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>geofusion.training</h3>
             <p>Losses, metrics, schedulers, and config-driven training orchestration for stable experimentation.</p>
           </article>
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>geofusion.workflows</h3>
             <p>Applied tasks such as part similarity, anomaly analysis, property prediction, and text search.</p>
           </article>
-          <article class="module-card">
+          <article class="module-card reveal">
             <h3>Product surface</h3>
             <p>Streamlit, notebooks, and scripts present the system without collapsing core logic into one-off demos.</p>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Why this structure matters</h2>
           <p>
@@ -266,18 +441,59 @@
         <div class="figure-card">
           <img src="figures/repository_map.svg" alt="GeoFusion AI repository map">
         </div>
-        <div class="panel body-copy">
+        <div class="panel body-copy reveal">
           <h3>Architectural rationale</h3>
           <p>
             GeoFusion AI separates representation learning from workflow execution so that encoders can be swapped, training recipes can be compared, and downstream applications can remain stable while the research layer improves. That is a practical engineering choice, not only an academic one.
           </p>
         </div>
       </section>
+      <section class="section reveal">
+        <div class="section-header">
+          <h2>Key configuration parameters</h2>
+          <p>All hyperparameters are managed through YAML files in <code>configs/</code>. The defaults below support the public demo and reproducible evaluation.</p>
+        </div>
+        <div class="metrics-table-wrap">
+          <table class="metrics-table">
+            <thead><tr><th>Parameter</th><th>Default</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>num_points</td><td class="metric-value">2048</td><td>Points per sample</td></tr>
+              <tr><td>embed_dim</td><td class="metric-value">256</td><td>Shared embedding dimension</td></tr>
+              <tr><td>batch_size</td><td class="metric-value">32</td><td>Training batch size</td></tr>
+              <tr><td>learning_rate</td><td class="metric-value">1e-3</td><td>AdamW learning rate</td></tr>
+              <tr><td>temperature</td><td class="metric-value">0.07</td><td>NT-Xent contrastive temperature</td></tr>
+              <tr><td>warmup_epochs</td><td class="metric-value">10</td><td>Linear LR warmup</td></tr>
+              <tr><td>early_stopping_patience</td><td class="metric-value">20</td><td>Epochs without improvement</td></tr>
+              <tr><td>index_type</td><td class="metric-value">IVFFlat</td><td>FAISS index type</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal" id="collaboration">
+        <div class="section-header">
+          <h2>Discuss implementation or collaboration</h2>
+          <p>For architecture reviews, reproducibility discussions, or industrial deployment pathways:</p>
+        </div>
+        <div class="contact-strip">
+          <a class="contact-pill" href="mailto:ngarteralebede12@gmail.com">ngarteralebede12@gmail.com</a>
+          <a class="contact-pill" href="mailto:lebede@terasystems.ai">lebede@terasystems.ai</a>
+          <a class="contact-pill" href="https://linkedin.com/in/lebede-ngartera-82429343" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="contact-pill" href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID 0000-0003-0561-1305</a>
+        </div>
+      </section>
     </main>
 
     <footer>
-      GeoFusion AI architecture page. For collaboration, contact ngarteralebede12@gmail.com or lebede@terasystems.ai.
+      <span>© 2026 GeoFusion AI — Architecture narrative</span>
+      <span>Prepared by Lebede Ngartera, PhD · Senior AI Engineer · <a href="mailto:ngarteralebede12@gmail.com">Email</a> · <a href="https://linkedin.com/in/lebede-ngartera-82429343" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID</a></span>
     </footer>
   </div>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
