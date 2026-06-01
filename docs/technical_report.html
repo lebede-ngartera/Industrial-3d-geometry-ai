@@ -9,6 +9,30 @@
   <meta property="og:description" content="A visually curated technical report covering GeoFusion AI model design, training, retrieval, and industrial workflow scope.">
   <meta property="og:image" content="figures/social_preview.svg">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GeoFusion AI | Industrial Geometry Intelligence">
+  <meta name="twitter:description" content="Multimodal AI for 3D CAD: part retrieval, anomaly detection, text-to-geometry search. Public showcase by Lebede Ngartera, PhD.">
+  <meta name="twitter:image" content="https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/figures/social_preview.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GeoFusion AI",
+  "description": "Industrial multimodal AI for 3D CAD geometry understanding, part retrieval, anomaly detection, and cross-modal engineering search.",
+  "applicationCategory": "ArtificialIntelligence",
+  "author": {
+    "@type": "Person",
+    "name": "Lebede Ngartera",
+    "honorificPrefix": "Dr.",
+    "sameAs": [
+      "https://linkedin.com/in/lebede-ngartera-82429343",
+      "https://orcid.org/0000-0003-0561-1305"
+    ]
+  },
+  "url": "https://lebede-ngartera.github.io/Industrial-3d-geometry-ai/",
+  "license": "https://opensource.org/licenses/MIT"
+}
+  </script>
   <style>
     :root {
       --ink: #17212b;
@@ -35,10 +59,48 @@
     }
 
     .page-shell { width: min(1220px, calc(100% - 48px)); margin: 0 auto; }
-    .topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 26px 0 10px; gap: 20px;
+
+    .topbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
     }
+
+    .topbar-wrap .page-shell {
+      padding: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+
+    .nav a[aria-current="page"] {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(23,33,43,0.3);
+      font-weight: 600;
+    }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 600ms ease, transform 600ms ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .hero-copy, .hero-visual { opacity: 1; transform: none; }
+
+    code { background: rgba(23,33,43,0.07); padding: 2px 6px; border-radius: 5px; font-size: 0.88em; }
+
     .brand { display: flex; align-items: center; gap: 14px; }
     .brand-mark {
       width: 46px; height: 46px; border-radius: 14px;
@@ -112,7 +174,84 @@
     }
     .report-card h3, .summary-card h3 { margin-top: 0; margin-bottom: 12px; font-size: 22px; }
     .report-card ul, .summary-card ul { margin: 0; padding-left: 18px; }
+
+    .metrics-table-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    .metrics-table th {
+      background: rgba(23,33,43,0.06);
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table td {
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    .metric-value {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sage);
+    }
+
+    .table-note {
+      padding: 12px 20px;
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    .pub-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .pub-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 22px 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .pub-year {
+      flex-shrink: 0;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--clay);
+      min-width: 48px;
+      padding-top: 2px;
+    }
+
+    .pub-body h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; line-height: 1.4; }
+    .pub-body p { margin: 0; color: var(--muted); font-size: 14px; }
+
     footer { padding: 34px 0 56px; color: var(--muted); font-size: 14px; }
+    footer a { color: var(--muted); text-decoration: underline; }
     @media (max-width: 1024px) {
       .hero, .summary-grid, .report-grid { grid-template-columns: 1fr; }
     }
@@ -125,8 +264,9 @@
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="topbar">
+  <div class="topbar-wrap">
+    <div class="page-shell">
+      <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div class="brand-copy">
@@ -136,13 +276,17 @@
       </div>
       <nav class="nav">
         <a href="index.html">Landing page</a>
+        <a href="technical_report.html" aria-current="page">Technical report</a>
         <a href="architecture.html">Architecture</a>
         <a href="https://github.com/lebede-ngartera/Industrial-3d-geometry-ai">Repository</a>
       </nav>
     </header>
+    </div>
+  </div>
 
+  <div class="page-shell">
     <main>
-      <section class="hero">
+      <section class="hero reveal">
         <div>
           <span class="eyebrow">Technical report</span>
           <h1>A report designed to be read, not endured.</h1>
@@ -157,14 +301,31 @@
           <div class="contact-strip">
             <a class="contact-pill" href="mailto:ngarteralebede12@gmail.com">ngarteralebede12@gmail.com</a>
             <a class="contact-pill" href="mailto:lebede@terasystems.ai">lebede@terasystems.ai</a>
+            <a class="contact-pill" href="https://linkedin.com/in/lebede-ngartera-82429343" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="contact-pill" href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID 0000-0003-0561-1305</a>
           </div>
         </div>
         <div class="hero-card">
           <img src="figures/validation_summary.svg" alt="GeoFusion AI validation summary">
         </div>
+        <div class="metrics-table-wrap" style="margin-top: 18px;">
+          <table class="metrics-table">
+            <thead><tr><th>Area</th><th>Metric</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Classification</td><td>Top-1 accuracy</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Classification</td><td>Top-5 accuracy</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>Recall@1</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>Recall@5</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Retrieval</td><td>mAP</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Cross-modal</td><td>G→T Recall@5</td><td class="metric-value">1.0000</td></tr>
+              <tr><td>Cross-modal</td><td>T→G Recall@5</td><td class="metric-value">1.0000</td></tr>
+            </tbody>
+          </table>
+          <p class="table-note">Evaluated on public synthetic subset: 5 geometry classes, 40 train / 10 test samples, 512-point clouds.</p>
+        </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Technical scope at a glance</h2>
           <p>
@@ -172,22 +333,22 @@
           </p>
         </div>
         <div class="summary-grid">
-          <article class="summary-card">
+          <article class="summary-card reveal">
             <strong>5</strong>
             <p>Downstream tasks are supported by the shared multimodal embedding surface.</p>
           </article>
-          <article class="summary-card">
+          <article class="summary-card reveal">
             <strong>3</strong>
             <p>Primary modalities are aligned: geometry, engineering language, and manufacturing metadata.</p>
           </article>
-          <article class="summary-card">
+          <article class="summary-card reveal">
             <strong>37</strong>
             <p>Public validation tests reinforce that the repository is more than presentation.</p>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Modeling system</h2>
           <p>
@@ -195,26 +356,26 @@
           </p>
         </div>
         <div class="report-grid">
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Geometry encoder</h3>
             <p>PointNet++ or DGCNN transform raw point clouds into compact embeddings through hierarchical abstraction or dynamic graph construction.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Text encoder</h3>
             <p>A transformer-based sentence encoder projects engineering language into the same shared semantic space as geometry.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Metadata encoder</h3>
             <p>Continuous and categorical manufacturing attributes are normalized, embedded, and projected into the fusion space.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Contrastive aligner</h3>
             <p>A temperature-scaled similarity matrix and symmetric NT-Xent loss align semantically related geometry-text pairs.</p>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Core model details</h2>
           <p>
@@ -222,7 +383,7 @@
           </p>
         </div>
         <div class="report-grid">
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>PointNet++</h3>
             <ul>
               <li>Three set abstraction layers with progressively coarser sampling.</li>
@@ -230,7 +391,7 @@
               <li>Global feature projection to a 256-dimensional embedding head.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>DGCNN</h3>
             <ul>
               <li>Four EdgeConv blocks with dynamic k-nearest-neighbor graphs.</li>
@@ -238,7 +399,7 @@
               <li>Global max and mean pooling for the final representation.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Diffusion model</h3>
             <ul>
               <li>DDPM-style design with 1000 timesteps and linear noise schedule.</li>
@@ -246,7 +407,7 @@
               <li>Conditional generation with geometry or text signals when needed.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Anomaly detector</h3>
             <ul>
               <li>Combines reconstruction-based and density-based scoring.</li>
@@ -257,7 +418,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Data, training, and retrieval</h2>
           <p>
@@ -265,7 +426,7 @@
           </p>
         </div>
         <div class="report-grid">
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Data pipeline</h3>
             <ul>
               <li>Supports ModelNet40, ShapeNet, and custom point cloud formats.</li>
@@ -273,7 +434,7 @@
               <li>Generates synthetic engineering-style text metadata for multimodal training.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Training protocol</h3>
             <ul>
               <li>AdamW, warmup, cosine scheduling, gradient clipping, and early stopping.</li>
@@ -281,7 +442,7 @@
               <li>Supports contrastive, triplet, classification, and multi-task losses.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Retrieval system</h3>
             <ul>
               <li>FAISS indices support exact, approximate, and quantized search.</li>
@@ -289,7 +450,7 @@
               <li>Normalized vectors enable cosine-style similarity at scale.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Evaluation</h3>
             <ul>
               <li>Classification accuracy, Recall@K, Precision@K, mAP, and threshold-calibrated anomaly metrics.</li>
@@ -300,7 +461,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="section-header">
           <h2>Industrial workflow intent</h2>
           <p>
@@ -308,26 +469,33 @@
           </p>
         </div>
         <div class="report-grid">
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Part similarity</h3>
             <p>Encode a query part, retrieve nearest neighbors from FAISS, and support reuse or near-duplicate inspection.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Anomaly analysis</h3>
             <p>Score new parts against calibrated normal baselines and classify them into interpretable risk levels.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Property prediction</h3>
             <p>Estimate mass, volume, surface area, stress proxies, and manufacturability with uncertainty-aware outputs.</p>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Text search</h3>
             <p>Use engineering language such as lightweight bracket or curved support arm to retrieve candidate shapes.</p>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
+        <div class="panel body-copy reveal" style="border-left: 4px solid var(--clay); border-radius: 0 var(--radius) var(--radius) 0;">
+          <h3>What this report claims and what it does not</h3>
+          <p>All metrics are reproducible from <code>scripts/public_eval.py</code> on the public synthetic subset (40 train / 10 test samples). The results demonstrate functional pipeline integrity, not production-scale industrial benchmarks. The private project layer contains more extensive validation. This distinction is intentional: the public repository is a trust-building entry point, not the full evaluation record.</p>
+        </div>
+      </section>
+
+      <section class="section reveal">
         <div class="section-header">
           <h2>Selected references</h2>
           <p>
@@ -335,14 +503,14 @@
           </p>
         </div>
         <div class="report-grid">
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Point cloud learning</h3>
             <ul>
               <li>Qi et al., PointNet++, NeurIPS 2017.</li>
               <li>Wang et al., Dynamic Graph CNN, ACM TOG 2019.</li>
             </ul>
           </article>
-          <article class="report-card">
+          <article class="report-card reveal">
             <h3>Multimodal alignment and generation</h3>
             <ul>
               <li>Radford et al., CLIP-style representation learning, ICML 2021.</li>
@@ -351,11 +519,54 @@
           </article>
         </div>
       </section>
+      <section class="section reveal" id="publications">
+        <div class="section-header">
+          <h2>Selected publications</h2>
+          <p>Research contributions grounding the technical approach in peer-reviewed methodology.</p>
+        </div>
+        <div class="pub-list">
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Bayesian RAG: Uncertainty-Aware Retrieval for Reliable Financial Question Answering</h3>
+              <p>Frontiers in Artificial Intelligence, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Hybrid Naive Bayes Models for Scam Detection: Comparative Insights From Email and Financial Fraud</h3>
+              <p>IEEE Access, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2025</span>
+            <div class="pub-body">
+              <h3>Enhancing Autonomous Systems with Bayesian Neural Networks: A Probabilistic Framework for Navigation and Decision-Making</h3>
+              <p>Frontiers in Built Environment, 2025</p>
+            </div>
+          </article>
+          <article class="pub-card reveal">
+            <span class="pub-year">2024</span>
+            <div class="pub-body">
+              <h3>Application of Bayesian Neural Networks in Healthcare: Three Case Studies</h3>
+              <p>Machine Learning and Knowledge Extraction, 2024</p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer>
-      GeoFusion AI technical report. For collaboration, contact ngarteralebede12@gmail.com or lebede@terasystems.ai.
+      <span>© 2026 GeoFusion AI — Technical report</span>
+      <span>Prepared by Lebede Ngartera, PhD · Senior AI Engineer · <a href="mailto:ngarteralebede12@gmail.com">Email</a> · <a href="https://linkedin.com/in/lebede-ngartera-82429343" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://orcid.org/0000-0003-0561-1305" target="_blank" rel="noopener">ORCID</a></span>
     </footer>
   </div>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
